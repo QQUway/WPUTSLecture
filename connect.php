@@ -1,8 +1,8 @@
 <?php
     $servername = "localhost";
     $username = "root";
-    $password = "@Rifqi001";
-    $db_name = "uts_wp_login";
+    $password = "";
+    $db_name = "uts_wp";
     $conn = new mysqli($servername, $username, $password, $db_name);
 
     if ($conn->connect_error) {

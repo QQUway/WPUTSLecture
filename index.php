@@ -12,7 +12,7 @@
 <body>
 
 <div class="login-container">
-    <h2>Login Form</h2>
+    <h2>Login Form cuy</h2>
     <form name="form" action="login.php" method="post">
         <label for="username">Username:</label>
         <input type="text" id="user" name="username" required></br></br>

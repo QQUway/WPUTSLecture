@@ -10,54 +10,90 @@ if (isset($_POST['submit'])) {
     $jenis_kelamin = $_POST['jenis_kelamin'];
     $tanggal_lahir = $_POST['tanggal_lahir'];
 
-    // Check if the username already exists
-    $checkQuery = $conn->prepare("SELECT COUNT(*) as count FROM user WHERE username = ?");
-    $checkQuery->bind_param("s", $username);
-    $checkQuery->execute();
-    $result = $checkQuery->get_result();
-    $row = $result->fetch_assoc();
+    // Handle file upload
+    $targetDir = "resource/data/";
+    $targetFile = $targetDir . basename($_FILES["bukti_transfer"]["name"]);
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
-    if ($row['count'] > 0) {
-        // Username already exists
-        echo '<script>
-            alert("Username already exists. Please choose a different username.");
-            window.location.href = "register.php";
-        </script>';
-        exit;
+    // Check if image file is a actual image or fake image
+    $check = getimagesize($_FILES["bukti_transfer"]["tmp_name"]);
+    if ($check === false) {
+        echo "File is not an image.";
+        $uploadOk = 0;
     }
 
-    // Fetch the number of entries in the user table
-    $countResult = $conn->query("SELECT COUNT(*) as count FROM user");
-    $countRow = $countResult->fetch_assoc();
-    $count = $countRow['count'];
+    // Check file size
+    if ($_FILES["bukti_transfer"]["size"] > 500000) {
+        echo "Sorry, your file is too large.";
+        $uploadOk = 0;
+    }
 
-    // Assign an ID (assuming the ID is an integer with a maximum length of 4)
-    $newId = ($count < 9999) ? $count + 1 : 1;
+    // Allow certain file formats
+    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+        && $imageFileType != "gif"
+    ) {
+        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+        $uploadOk = 0;
+    }
 
-    // Dummy value for file upload
-    $dummyFile = "00";
+    // Check if $uploadOk is set to 0 by an error
+    if ($uploadOk == 0) {
+        echo "Sorry, your file was not uploaded.";
+    } else {
+        if (move_uploaded_file($_FILES["bukti_transfer"]["tmp_name"], $targetFile)) {
+            echo "The file " . htmlspecialchars(basename($_FILES["bukti_transfer"]["name"])) . " has been uploaded.";
 
-    // Use prepared statement to prevent SQL injection
-    $userInsertStmt = $conn->prepare("INSERT INTO user (id, username, password) VALUES (?, ?, ?)");
-    $userInsertStmt->bind_param("iss", $newId, $username, $password);
+            // Check if the username already exists
+            $checkQuery = $conn->prepare("SELECT COUNT(*) as count FROM user WHERE username = ?");
+            $checkQuery->bind_param("s", $username);
+            $checkQuery->execute();
+            $result = $checkQuery->get_result();
+            $row = $result->fetch_assoc();
 
-    // Execute the user insertion statement
-    $userInsertStmt->execute();
+            if ($row['count'] > 0) {
+                // Username already exists
+                echo '<script>
+                    alert("Username already exists. Please choose a different username.");
+                    window.location.href = "register.php";
+                </script>';
+                exit;
+            }
 
-    // Insert nasabah data with dummy file value
-    $nasabahInsertStmt = $conn->prepare("INSERT INTO nasabah (user_id, Email, Nama, Alamat, Jenis_Kelamin, Tanggal_Lahir, Upload_File_Bukti_Pembayaran_Bayaran_Simpanan_Pokok) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $nasabahInsertStmt->bind_param("issssss", $newId, $email, $nama, $alamat, $jenis_kelamin, $tanggal_lahir, $dummyFile);
+            // Fetch the number of entries in the user table
+            $countResult = $conn->query("SELECT COUNT(*) as count FROM user");
+            $countRow = $countResult->fetch_assoc();
+            $count = $countRow['count'];
 
-    // Execute the nasabah insertion statement
-    $nasabahInsertStmt->execute();
+            // Assign an ID (assuming the ID is an integer with a maximum length of 4)
+            $newId = ($count < 9999) ? $count + 1 : 1;
 
-    // Close the statements
-    $userInsertStmt->close();
-    $nasabahInsertStmt->close();
+            // Use prepared statement to prevent SQL injection
+            $userInsertStmt = $conn->prepare("INSERT INTO user (id, username, password) VALUES (?, ?, ?)");
+            $userInsertStmt->bind_param("iss", $newId, $username, $password);
 
-    echo "Registration successful! Your ID is: " . sprintf('%04d', $newId);
+            // Execute the user insertion statement
+            $userInsertStmt->execute();
+
+            // Insert nasabah data with the uploaded file name
+            $nasabahInsertStmt = $conn->prepare("INSERT INTO nasabah (user_id, Email, Nama, Alamat, Jenis_Kelamin, Tanggal_Lahir, Upload_File_Bukti_Pembayaran_Bayaran_Simpanan_Pokok) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $nasabahInsertStmt->bind_param("issssss", $newId, $email, $nama, $alamat, $jenis_kelamin, $tanggal_lahir, basename($_FILES["bukti_transfer"]["name"]));
+
+            // Execute the nasabah insertion statement
+            $nasabahInsertStmt->execute();
+
+            // Close the statements
+            $userInsertStmt->close();
+            $nasabahInsertStmt->close();
+
+            echo "Registration successful! Your ID is: " . sprintf('%04d', $newId);
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+        }
+    }
 }
 ?>
+
 
 
 <!DOCTYPE html>

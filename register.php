@@ -34,35 +34,31 @@ if (isset($_POST['submit'])) {
     // Assign an ID (assuming the ID is an integer with a maximum length of 4)
     $newId = ($count < 9999) ? $count + 1 : 1;
 
-    // Upload File
-    $targetDirectory = "uploads/";
-    $uploadFile = $targetDirectory . basename($_FILES['bukti_transfer']['name']);
+    // Dummy value for file upload
+    $dummyFile = "00";
 
-    if (move_uploaded_file($_FILES['bukti_transfer']['tmp_name'], $uploadFile)) {
-        // Use prepared statement to prevent SQL injection
-        $userInsertStmt = $conn->prepare("INSERT INTO user (id, username, password) VALUES (?, ?, ?)");
-        $userInsertStmt->bind_param("iss", $newId, $username, $password);
+    // Use prepared statement to prevent SQL injection
+    $userInsertStmt = $conn->prepare("INSERT INTO user (id, username, password) VALUES (?, ?, ?)");
+    $userInsertStmt->bind_param("iss", $newId, $username, $password);
 
-        // Execute the user insertion statement
-        $userInsertStmt->execute();
+    // Execute the user insertion statement
+    $userInsertStmt->execute();
 
-        // Insert nasabah data
-        $nasabahInsertStmt = $conn->prepare("INSERT INTO nasabah (user_id, Email, Nama, Alamat, Jenis_Kelamin, Tanggal_Lahir, Upload_File_Bukti_Pembayaran_Bayaran_Simpanan_Pokok) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $nasabahInsertStmt->bind_param("issssss", $newId, $email, $nama, $alamat, $jenis_kelamin, $tanggal_lahir, $uploadFile);
+    // Insert nasabah data with dummy file value
+    $nasabahInsertStmt = $conn->prepare("INSERT INTO nasabah (user_id, Email, Nama, Alamat, Jenis_Kelamin, Tanggal_Lahir, Upload_File_Bukti_Pembayaran_Bayaran_Simpanan_Pokok) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $nasabahInsertStmt->bind_param("issssss", $newId, $email, $nama, $alamat, $jenis_kelamin, $tanggal_lahir, $dummyFile);
 
-        // Execute the nasabah insertion statement
-        $nasabahInsertStmt->execute();
+    // Execute the nasabah insertion statement
+    $nasabahInsertStmt->execute();
 
-        // Close the statements
-        $userInsertStmt->close();
-        $nasabahInsertStmt->close();
+    // Close the statements
+    $userInsertStmt->close();
+    $nasabahInsertStmt->close();
 
-        echo "Registration successful! Your ID is: " . sprintf('%04d', $newId);
-    } else {
-        echo "Error uploading file.";
-    }
+    echo "Registration successful! Your ID is: " . sprintf('%04d', $newId);
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

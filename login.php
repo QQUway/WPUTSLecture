@@ -19,6 +19,8 @@
         $stmt->close();
 
         if($count == 1){
+            // Set cookie to indicate the user is logged in
+            setcookie("username", $username, time() + (86400 * 30), "/"); // 30 days expiration
             header("Location: welcome.php");
             exit;
         } else {

@@ -8,8 +8,9 @@ include ('connect.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Profile</title>
-    <link rel="stylesheet" type="text/css" href="profile.css">
+    <link rel="stylesheet" type="text/css" href="resource/css/profile.css">
 </head>
+
 <body>
     <div class="container">
         <h1>Customer Profile</h1>

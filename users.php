@@ -52,7 +52,9 @@
                     echo "<td>" . $row["Alamat"] . "</td>";
                     echo "<td>" . $row["Jenis_Kelamin"] . "</td>";
                     echo "<td>" . $row["Tanggal_Lahir"] . "</td>";
+                    echo "<td><button class='view-btn' onclick='viewProfile(" . $row["nasabah_id"] . ")'>View</button></td>";
                     echo "<td><button class='delete-btn' onclick='confirmDelete(" . $row["nasabah_id"] . ")'>Delete</button></td>";
+
                     echo "</tr>";
                 }
             } else {

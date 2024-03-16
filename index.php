@@ -9,12 +9,12 @@ include("connect.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
     <link rel="stylesheet" type="text/css" href="resource/css/style.css">
+    <link rel="stylesheet" type="text/css" href="resource/css/navbar-footer.css">
 </head>
 
 <body>
-
     <div class="login-container">
-        <h2>Login Form cuy</h2>
+        <h2>Login</h2>
         <form name="form" action="login.php" method="post">
             <label for="username">Username:</label>
             <input type="text" id="user" name="username" required></br></br>
@@ -24,9 +24,12 @@ include("connect.php");
             </br></br>
             <input type="submit" id="btn" value="Login" name="submit">
         </form>
+        <p>Don't have an account? <a href="#">Register Now.</a></p>
     </div>
 
-    ngentot
+    <div class="footer">
+        <p>&copy; 2024 KDHH Koperasi. All rights reserved.</p>
+    </div>
 
 </body>
 

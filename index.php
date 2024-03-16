@@ -24,7 +24,7 @@ include("connect.php");
             </br></br>
             <input type="submit" id="btn" value="Login" name="submit">
         </form>
-        <p>Don't have an account? <a href="#">Register Now.</a></p>
+        <p>Don't have an account? <a href="register.php">Register Now.</a></p>
     </div>
 
     <div class="footer">

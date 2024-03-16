@@ -11,13 +11,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="resource/css/style.css">
 </head>
 <body>
 
-<div>
+<div class="admin_home" >
     <h2>Welcome admin!</h2>
-    <p><a href="logout.php">Logout</a></p>
+    <h2><a href="users.php">users</a></h2>
+    <h2><a href="logout.php">Logout</a></h2>
 </div>
 
 </body>

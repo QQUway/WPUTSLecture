@@ -18,12 +18,11 @@ if(!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] 
 </head>
 
 <body>
-    <div class="navbar">
-        <a href="#">Home</a>
-        <a href="#">Users</a>
-        <a href="#">History</a>
-        <a href="#">Log Out</a>
-    </div>
+<div class="navbar">
+        <a href="admin_home.php">Home</a>
+        <a href="users.php">Users</a>
+        <a href="logout.php">Log Out</a>
+</div>
 
     <h1>User List</h1>
 

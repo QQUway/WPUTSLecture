@@ -14,11 +14,12 @@ include('connect.php');
 </head>
 
 <body>
-    <div class="navbar">
-        <a href="#">Home</a>
-        <a href="#">Pembayaran</a>
-        <a href="#">Profile</a>
-        <a href="#">Log Out</a>
+<div class="navbar">
+        <a href="nasabah_home.php">Home</a>
+        <a href="transaction_page.php">Pembayaran</a>
+        <a href="profile.php">Profile</a>
+        <a href="nasabah_history.php">History</a>
+        <a href="logout.php">Log Out</a>
     </div>
     <div class="container">
         <h1>Customer Profile</h1>
@@ -88,9 +89,7 @@ include('connect.php');
         </div>
     </div>
 
-    <div class="footer">
-        <p>&copy; 2024 KDHH Koperasi. All rights reserved.</p>
-    </div>
+    
 
     <script>
         document.getElementById('profile-photo-input').addEventListener('change', function(event) {

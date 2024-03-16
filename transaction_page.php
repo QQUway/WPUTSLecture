@@ -80,9 +80,18 @@ if (isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transaction Page</title>
     <link rel="stylesheet" type="text/css" href="resource/css/style.css">
+    <link rel="stylesheet" type="text/css" href="resource/css/profile.css">
+    <link rel="stylesheet" type="text/css" href="resource/css/navbar-footer.css">
+
 </head>
 <body>
-
+    <div class="navbar">
+        <a href="nasabah_home.php">Home</a>
+        <a href="transaction_page.php">Pembayaran</a>
+        <a href="profile.php">Profile</a>
+        <a href="nasabah_history.php">History</a>
+        <a href="logout.php">Log Out</a>
+    </div>
 <div class="login-container">
     <h2>Perform Transaction</h2>
     <form action="transaction_page.php" method="post" enctype="multipart/form-data">
@@ -103,6 +112,10 @@ if (isset($_POST['submit'])) {
     <br>
     <a href="nasabah_home.php">Back to Nasabah Home</a>
 </div>
-
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2024 Company Name. All rights reserved.</p>
+    </div>
+</footer>
 </body>
 </html>

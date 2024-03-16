@@ -101,7 +101,7 @@ INSERT INTO `transaction_data` (`transaction_id`, `status`, `nasabah_id`, `admin
 CREATE TABLE `user` (
   `id` int(4) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL
+  `password` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

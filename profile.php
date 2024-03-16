@@ -81,57 +81,36 @@ include ('connect.php');
     </div>
 
     <script>
-        document.getElementById('profile-photo-input').addEventListener('change', function(event) {
-            var file = event.target.files[0];
-            var cropperContainer = document.getElementById('cropper-container');
-            var uploadButton = document.getElementById('upload-button');
+        document.getElementById('update-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting
+
+            // Get the updated data from the form fields
+            var newName = document.getElementById('update-name').value;
+            var newEmail = document.getElementById('update-email').value;
+            var newAddress = document.getElementById('update-address').value;
+
+            // Update the profile information
+            document.getElementById('customer-name').innerText = newName;
+            document.getElementById('customer-email').innerText = newEmail;
+            document.getElementById('customer-address').innerText = newAddress;
+
+            // Optional: You can also send the updated data to the server here using AJAX
+        });
+
+        document.getElementById('photo-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting
+            
+            var fileInput = document.getElementById('profile-photo');
+            var file = fileInput.files[0];
 
             if (file) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
-                    var cropperImage = document.getElementById('cropper-image');
-                    cropperImage.src = e.target.result;
-
-                    if (!cropperContainer.style.display || cropperContainer.style.display === 'none') {
-                    cropperContainer.style.display = 'block';
-                }
-
-                if (!uploadButton.style.display || uploadButton.style.display === 'none') {
-                    uploadButton.style.display = 'inline-block';
-                }
-
-                var cropper = new Cropper(cropperImage, {
-                    aspectRatio: 1, // square aspect ratio
-                    viewMode: 1, // restrict the cropped area to be within the container
-                    autoCropArea: 1, // automatically fit the cropped area to the container
-                });
-
-                document.getElementById('crop-button').addEventListener('click', function() {
-                    // Get the cropped canvas
-                    var croppedCanvas = cropper.getCroppedCanvas({
-                        width: 200, // set the desired width
-                        height: 200, // set the desired height
-                    });
-
-                    // Convert the cropped canvas to a base64 encoded URL
-                    var croppedDataURL = croppedCanvas.toDataURL();
-
-                    // Display the cropped image for preview
-                    var profilePhotoContainer = document.querySelector('.profile-photo-container');
-                    profilePhotoContainer.innerHTML = '<img src="' + croppedDataURL + '" alt="Profile Picture">';
-
-                    // Optionally, you can also submit the cropped image to the server
-                    // by sending croppedDataURL to the server using AJAX
-                });
-
-                document.getElementById('upload-button').addEventListener('click', function() {
-                    // Optionally, you can upload the cropped image to the server here
-                    // by sending croppedDataURL to the server using AJAX
-                });
-            };
-            reader.readAsDataURL(file);
-        }
-    });
+                    document.getElementById('profile-img').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
     </script>
 </body>
 </html>

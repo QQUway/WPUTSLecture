@@ -1,9 +1,10 @@
-<?php 
-include ('connect.php');
+<?php
+include('connect.php');
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,12 @@ include ('connect.php');
 </head>
 
 <body>
+    <div class="navbar">
+        <a href="#">Home</a>
+        <a href="#">Pembayaran</a>
+        <a href="#">Profile</a>
+        <a href="#">Log Out</a>
+    </div>
     <div class="container">
         <h1>Customer Profile</h1>
         <div class="profile-info">
@@ -21,16 +28,16 @@ include ('connect.php');
             <div class="biodata">
                 <label for="customer-name">Name:</label>
                 <p id="customer-name">John Doe</p>
-                
+
                 <label for="customer-email">Email:</label>
                 <p id="customer-email">johndoe@example.com</p>
-                
+
                 <label for="customer-address">Address:</label>
                 <p id="customer-address">123 Main St, City, Country</p>
-                
+
                 <label for="customer-phone">Phone:</label>
                 <p id="customer-phone">123-456-7890</p>
-                
+
                 <label for="customer-joined">Joined:</label>
                 <p id="customer-joined">January 1, 2020</p>
             </div>
@@ -42,10 +49,10 @@ include ('connect.php');
             <form id="update-form">
                 <label for="update-name">Name:</label>
                 <input type="text" id="update-name" name="update-name" placeholder="Enter new name">
-                
+
                 <label for="update-email">Email:</label>
                 <input type="email" id="update-email" name="update-email" placeholder="Enter new email">
-                
+
                 <label for="update-address">Address:</label>
                 <input type="text" id="update-address" name="update-address" placeholder="Enter new address">
 
@@ -67,11 +74,12 @@ include ('connect.php');
             <h2>Reset Password</h2>
             <form id="password-form">
                 <label for="current-password">Current Password:</label>
-                <input type="password" id="current-password" name="current-password" placeholder="Enter current password">
-                
+                <input type="password" id="current-password" name="current-password"
+                    placeholder="Enter current password">
+
                 <label for="new-password">New Password:</label>
                 <input type="password" id="new-password" name="new-password" placeholder="Enter new password">
-                
+
                 <label for="confirm-password">Confirm New Password:</label>
                 <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm new password">
 
@@ -80,19 +88,23 @@ include ('connect.php');
         </div>
     </div>
 
+    <div class="footer">
+        <p>&copy; 2024 KDHH Koperasi. All rights reserved.</p>
+    </div>
+
     <script>
-        document.getElementById('profile-photo-input').addEventListener('change', function(event) {
-            var file = event.target.files[0];
-            var cropperContainer = document.getElementById('cropper-container');
-            var uploadButton = document.getElementById('upload-button');
+    document.getElementById('profile-photo-input').addEventListener('change', function(event) {
+        var file = event.target.files[0];
+        var cropperContainer = document.getElementById('cropper-container');
+        var uploadButton = document.getElementById('upload-button');
 
-            if (file) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    var cropperImage = document.getElementById('cropper-image');
-                    cropperImage.src = e.target.result;
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var cropperImage = document.getElementById('cropper-image');
+                cropperImage.src = e.target.result;
 
-                    if (!cropperContainer.style.display || cropperContainer.style.display === 'none') {
+                if (!cropperContainer.style.display || cropperContainer.style.display === 'none') {
                     cropperContainer.style.display = 'block';
                 }
 
@@ -118,7 +130,8 @@ include ('connect.php');
 
                     // Display the cropped image for preview
                     var profilePhotoContainer = document.querySelector('.profile-photo-container');
-                    profilePhotoContainer.innerHTML = '<img src="' + croppedDataURL + '" alt="Profile Picture">';
+                    profilePhotoContainer.innerHTML = '<img src="' + croppedDataURL +
+                        '" alt="Profile Picture">';
 
                     // Optionally, you can also submit the cropped image to the server
                     // by sending croppedDataURL to the server using AJAX
@@ -134,4 +147,5 @@ include ('connect.php');
     });
     </script>
 </body>
+
 </html>

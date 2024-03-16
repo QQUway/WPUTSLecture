@@ -1,5 +1,10 @@
 <?php
 include "connect.php"; // Include your PHP connection script
+// Check if user is logged in and is an admin, if not, redirect to login page
+if(!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] !== 'admin') {
+    header("Location: index.php");
+    exit;
+}
 
 // Check if user_id is set in the query string
 if (isset($_GET['user_id'])) {

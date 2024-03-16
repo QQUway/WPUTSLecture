@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2024 at 02:25 PM
+-- Generation Time: Mar 15, 2024 at 03:01 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -38,7 +38,8 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `user_id`, `name`) VALUES
-(1, 2, 'Rifqi');
+(1, 2, 'Rifqi'),
+(2, 1, 'Admin');
 
 -- --------------------------------------------------------
 
@@ -54,16 +55,18 @@ CREATE TABLE `nasabah` (
   `Alamat` varchar(255) DEFAULT NULL,
   `Jenis_Kelamin` varchar(20) DEFAULT NULL,
   `Tanggal_Lahir` date DEFAULT NULL,
-  `Upload_File_Bukti_Pembayaran_Bayaran_Simpanan_Pokok` varchar(255) DEFAULT NULL
+  `Upload_File_Bukti_Pembayaran_Bayaran_Simpanan_Pokok` varchar(255) DEFAULT NULL,
+  `saldo` decimal(10,2) DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `nasabah`
 --
 
-INSERT INTO `nasabah` (`nasabah_id`, `user_id`, `Email`, `Nama`, `Alamat`, `Jenis_Kelamin`, `Tanggal_Lahir`, `Upload_File_Bukti_Pembayaran_Bayaran_Simpanan_Pokok`) VALUES
-(1, 0, 'ijaisjdisajdij2@s.d', 'rifqi', 'ajsidjasid', 'Laki-laki', '2003-03-10', '00'),
-(2, 2, 'rifqihabib04@gmail.com', 'RifqiAdmin', 'jl wokwi', 'Laki-laki', '2223-02-09', '00');
+INSERT INTO `nasabah` (`nasabah_id`, `user_id`, `Email`, `Nama`, `Alamat`, `Jenis_Kelamin`, `Tanggal_Lahir`, `Upload_File_Bukti_Pembayaran_Bayaran_Simpanan_Pokok`, `saldo`) VALUES
+(1, 0, 'ijaisjdisajdij2@s.d', 'rifqi', 'ajsidjasid', 'Laki-laki', '2003-03-10', '00', 0.00),
+(2, 2, 'rifqihabib04@gmail.com', 'RifqiAdmin', 'jl wokwi', 'Laki-laki', '2223-02-09', '00', 0.00),
+(3, 4, 'haya@amel.nt', 'haya', 'jl. wokwi', 'Laki-laki', '2004-03-05', 'mio.png', 0.00);
 
 -- --------------------------------------------------------
 
@@ -98,7 +101,7 @@ INSERT INTO `transaction_data` (`transaction_id`, `status`, `nasabah_id`, `admin
 CREATE TABLE `user` (
   `id` int(4) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL
+  `password` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -107,7 +110,9 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `username`, `password`) VALUES
 (0, 'habib', 'habib'),
-(2, 'RifqiAdmin', '@Rifqi001');
+(1, 'Admin', 'Admin'),
+(2, 'RifqiAdmin', '@Rifqi001'),
+(4, 'haya', 'haya');
 
 --
 -- Indexes for dumped tables
@@ -150,7 +155,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `nasabah`
 --
 ALTER TABLE `nasabah`
-  MODIFY `nasabah_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `nasabah_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `transaction_data`

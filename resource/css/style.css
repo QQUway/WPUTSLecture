@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #D6D9CE; /* Changed */
     margin: 0;
     padding: 0;
 }
@@ -8,7 +8,7 @@ body {
 .login-container {
     max-width: 400px;
     margin: 50px auto;
-    background-color: #fff;
+    background-color: #F3DADB; /* Changed */
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -37,13 +37,11 @@ input {
 }
 
 #btn {
-    background-color: #4caf50;
+    background-color: #F4C3C2; /* Changed */
     color: #fff;
     cursor: pointer;
 }
 
 #btn:hover {
-    background-color: #45a049;
+    background-color: #F1B5CB; /* Changed */
 }
-
-/* Add more styles as needed */

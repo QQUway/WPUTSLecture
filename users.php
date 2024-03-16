@@ -1,3 +1,11 @@
+<?php
+// Check if user is logged in and is an admin, if not, redirect to login page
+if(!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] !== 'admin') {
+    header("Location: index.php");
+    exit;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 

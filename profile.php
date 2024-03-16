@@ -1,17 +1,25 @@
-<?php 
-include ('connect.php');
+<?php
+include('connect.php');
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Profile</title>
     <link rel="stylesheet" type="text/css" href="resource/css/profile.css">
+    <link rel="stylesheet" type="text/css" href="resource/css/navbar-footer.css">
 </head>
 
 <body>
+    <div class="navbar">
+        <a href="#">Home</a>
+        <a href="#">Pembayaran</a>
+        <a href="#">Profile</a>
+        <a href="#">Log Out</a>
+    </div>
     <div class="container">
         <h1>Customer Profile</h1>
         <div class="profile-info">
@@ -21,16 +29,16 @@ include ('connect.php');
             <div class="biodata">
                 <label for="customer-name">Name:</label>
                 <p id="customer-name">John Doe</p>
-                
+
                 <label for="customer-email">Email:</label>
                 <p id="customer-email">johndoe@example.com</p>
-                
+
                 <label for="customer-address">Address:</label>
                 <p id="customer-address">123 Main St, City, Country</p>
-                
+
                 <label for="customer-phone">Phone:</label>
                 <p id="customer-phone">123-456-7890</p>
-                
+
                 <label for="customer-joined">Joined:</label>
                 <p id="customer-joined">January 1, 2020</p>
             </div>
@@ -42,10 +50,10 @@ include ('connect.php');
             <form id="update-form">
                 <label for="update-name">Name:</label>
                 <input type="text" id="update-name" name="update-name" placeholder="Enter new name">
-                
+
                 <label for="update-email">Email:</label>
                 <input type="email" id="update-email" name="update-email" placeholder="Enter new email">
-                
+
                 <label for="update-address">Address:</label>
                 <input type="text" id="update-address" name="update-address" placeholder="Enter new address">
 
@@ -68,10 +76,10 @@ include ('connect.php');
             <form id="password-form">
                 <label for="current-password">Current Password:</label>
                 <input type="password" id="current-password" name="current-password" placeholder="Enter current password">
-                
+
                 <label for="new-password">New Password:</label>
                 <input type="password" id="new-password" name="new-password" placeholder="Enter new password">
-                
+
                 <label for="confirm-password">Confirm New Password:</label>
                 <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm new password">
 
@@ -80,37 +88,64 @@ include ('connect.php');
         </div>
     </div>
 
+    <div class="footer">
+        <p>&copy; 2024 KDHH Koperasi. All rights reserved.</p>
+    </div>
+
     <script>
-        document.getElementById('update-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the form from submitting
-
-            // Get the updated data from the form fields
-            var newName = document.getElementById('update-name').value;
-            var newEmail = document.getElementById('update-email').value;
-            var newAddress = document.getElementById('update-address').value;
-
-            // Update the profile information
-            document.getElementById('customer-name').innerText = newName;
-            document.getElementById('customer-email').innerText = newEmail;
-            document.getElementById('customer-address').innerText = newAddress;
-
-            // Optional: You can also send the updated data to the server here using AJAX
-        });
-
-        document.getElementById('photo-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the form from submitting
-            
-            var fileInput = document.getElementById('profile-photo');
-            var file = fileInput.files[0];
+        document.getElementById('profile-photo-input').addEventListener('change', function(event) {
+            var file = event.target.files[0];
+            var cropperContainer = document.getElementById('cropper-container');
+            var uploadButton = document.getElementById('upload-button');
 
             if (file) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
-                    document.getElementById('profile-img').src = e.target.result;
+                    var cropperImage = document.getElementById('cropper-image');
+                    cropperImage.src = e.target.result;
+
+                    if (!cropperContainer.style.display || cropperContainer.style.display === 'none') {
+                        cropperContainer.style.display = 'block';
+                    }
+
+                    if (!uploadButton.style.display || uploadButton.style.display === 'none') {
+                        uploadButton.style.display = 'inline-block';
+                    }
+
+                    var cropper = new Cropper(cropperImage, {
+                        aspectRatio: 1, // square aspect ratio
+                        viewMode: 1, // restrict the cropped area to be within the container
+                        autoCropArea: 1, // automatically fit the cropped area to the container
+                    });
+
+                    document.getElementById('crop-button').addEventListener('click', function() {
+                        // Get the cropped canvas
+                        var croppedCanvas = cropper.getCroppedCanvas({
+                            width: 200, // set the desired width
+                            height: 200, // set the desired height
+                        });
+
+                        // Convert the cropped canvas to a base64 encoded URL
+                        var croppedDataURL = croppedCanvas.toDataURL();
+
+                        // Display the cropped image for preview
+                        var profilePhotoContainer = document.querySelector('.profile-photo-container');
+                        profilePhotoContainer.innerHTML = '<img src="' + croppedDataURL +
+                            '" alt="Profile Picture">';
+
+                        // Optionally, you can also submit the cropped image to the server
+                        // by sending croppedDataURL to the server using AJAX
+                    });
+
+                    document.getElementById('upload-button').addEventListener('click', function() {
+                        // Optionally, you can upload the cropped image to the server here
+                        // by sending croppedDataURL to the server using AJAX
+                    });
                 };
                 reader.readAsDataURL(file);
             }
         });
     </script>
 </body>
+
 </html>

@@ -75,6 +75,10 @@
                 window.location.href = "delete_user.php?user_id=" + userId;
             }
         }
+
+        function viewProfile(userId) {
+            window.location.href = "user_view.php?user_id=" + userId;
+        }
     </script>
 </body>
 

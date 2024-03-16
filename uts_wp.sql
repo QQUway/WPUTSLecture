@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2024 at 10:35 AM
+-- Generation Time: Mar 15, 2024 at 03:01 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -33,6 +33,14 @@ CREATE TABLE `admin` (
   `name` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`admin_id`, `user_id`, `name`) VALUES
+(1, 2, 'Rifqi'),
+(2, 1, 'Admin');
+
 -- --------------------------------------------------------
 
 --
@@ -47,15 +55,42 @@ CREATE TABLE `nasabah` (
   `Alamat` varchar(255) DEFAULT NULL,
   `Jenis_Kelamin` varchar(20) DEFAULT NULL,
   `Tanggal_Lahir` date DEFAULT NULL,
-  `Upload_File_Bukti_Pembayaran_Bayaran_Simpanan_Pokok` varchar(255) DEFAULT NULL
+  `Upload_File_Bukti_Pembayaran_Bayaran_Simpanan_Pokok` varchar(255) DEFAULT NULL,
+  `saldo` decimal(10,2) DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `nasabah`
 --
 
-INSERT INTO `nasabah` (`nasabah_id`, `user_id`, `Email`, `Nama`, `Alamat`, `Jenis_Kelamin`, `Tanggal_Lahir`, `Upload_File_Bukti_Pembayaran_Bayaran_Simpanan_Pokok`) VALUES
-(1, 0, 'ijaisjdisajdij2@s.d', 'rifqi', 'ajsidjasid', 'Laki-laki', '2003-03-10', '00');
+INSERT INTO `nasabah` (`nasabah_id`, `user_id`, `Email`, `Nama`, `Alamat`, `Jenis_Kelamin`, `Tanggal_Lahir`, `Upload_File_Bukti_Pembayaran_Bayaran_Simpanan_Pokok`, `saldo`) VALUES
+(1, 0, 'ijaisjdisajdij2@s.d', 'rifqi', 'ajsidjasid', 'Laki-laki', '2003-03-10', '00', 0.00),
+(2, 2, 'rifqihabib04@gmail.com', 'RifqiAdmin', 'jl wokwi', 'Laki-laki', '2223-02-09', '00', 0.00),
+(3, 4, 'haya@amel.nt', 'haya', 'jl. wokwi', 'Laki-laki', '2004-03-05', 'mio.png', 0.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transaction_data`
+--
+
+CREATE TABLE `transaction_data` (
+  `transaction_id` int(11) NOT NULL,
+  `status` enum('pending','verified') NOT NULL,
+  `nasabah_id` int(11) NOT NULL,
+  `admin_id` int(11) DEFAULT NULL,
+  `kategori` enum('Wajib','Sukarela') NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `file_upload_transaction_image_proof` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `transaction_data`
+--
+
+INSERT INTO `transaction_data` (`transaction_id`, `status`, `nasabah_id`, `admin_id`, `kategori`, `amount`, `file_upload_transaction_image_proof`) VALUES
+(1, 'pending', 1, 1, 'Wajib', 50000.00, 'proof1.jpg'),
+(2, 'verified', 1, 1, 'Sukarela', 100000.00, 'proof2.jpg');
 
 -- --------------------------------------------------------
 
@@ -74,7 +109,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `password`) VALUES
-(0, 'habib', 'siadiasdjaidj');
+(0, 'habib', 'habib'),
+(1, 'Admin', 'Admin'),
+(2, 'RifqiAdmin', '@Rifqi001'),
+(4, 'haya', 'haya');
 
 --
 -- Indexes for dumped tables
@@ -95,6 +133,14 @@ ALTER TABLE `nasabah`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `transaction_data`
+--
+ALTER TABLE `transaction_data`
+  ADD PRIMARY KEY (`transaction_id`),
+  ADD KEY `nasabah_id` (`nasabah_id`),
+  ADD KEY `admin_id` (`admin_id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -109,7 +155,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `nasabah`
 --
 ALTER TABLE `nasabah`
-  MODIFY `nasabah_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `nasabah_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `transaction_data`
+--
+ALTER TABLE `transaction_data`
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -126,6 +178,13 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `nasabah`
   ADD CONSTRAINT `nasabah_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `transaction_data`
+--
+ALTER TABLE `transaction_data`
+  ADD CONSTRAINT `transaction_data_ibfk_1` FOREIGN KEY (`nasabah_id`) REFERENCES `nasabah` (`nasabah_id`),
+  ADD CONSTRAINT `transaction_data_ibfk_2` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

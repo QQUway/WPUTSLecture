@@ -10,6 +10,7 @@ include('connect.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Profile</title>
     <link rel="stylesheet" type="text/css" href="resource/css/profile.css">
+    <link rel="stylesheet" type="text/css" href="resource/css/navbar-footer.css">
 </head>
 
 <body>
@@ -74,8 +75,7 @@ include('connect.php');
             <h2>Reset Password</h2>
             <form id="password-form">
                 <label for="current-password">Current Password:</label>
-                <input type="password" id="current-password" name="current-password"
-                    placeholder="Enter current password">
+                <input type="password" id="current-password" name="current-password" placeholder="Enter current password">
 
                 <label for="new-password">New Password:</label>
                 <input type="password" id="new-password" name="new-password" placeholder="Enter new password">
@@ -93,58 +93,58 @@ include('connect.php');
     </div>
 
     <script>
-    document.getElementById('profile-photo-input').addEventListener('change', function(event) {
-        var file = event.target.files[0];
-        var cropperContainer = document.getElementById('cropper-container');
-        var uploadButton = document.getElementById('upload-button');
+        document.getElementById('profile-photo-input').addEventListener('change', function(event) {
+            var file = event.target.files[0];
+            var cropperContainer = document.getElementById('cropper-container');
+            var uploadButton = document.getElementById('upload-button');
 
-        if (file) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                var cropperImage = document.getElementById('cropper-image');
-                cropperImage.src = e.target.result;
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var cropperImage = document.getElementById('cropper-image');
+                    cropperImage.src = e.target.result;
 
-                if (!cropperContainer.style.display || cropperContainer.style.display === 'none') {
-                    cropperContainer.style.display = 'block';
-                }
+                    if (!cropperContainer.style.display || cropperContainer.style.display === 'none') {
+                        cropperContainer.style.display = 'block';
+                    }
 
-                if (!uploadButton.style.display || uploadButton.style.display === 'none') {
-                    uploadButton.style.display = 'inline-block';
-                }
+                    if (!uploadButton.style.display || uploadButton.style.display === 'none') {
+                        uploadButton.style.display = 'inline-block';
+                    }
 
-                var cropper = new Cropper(cropperImage, {
-                    aspectRatio: 1, // square aspect ratio
-                    viewMode: 1, // restrict the cropped area to be within the container
-                    autoCropArea: 1, // automatically fit the cropped area to the container
-                });
-
-                document.getElementById('crop-button').addEventListener('click', function() {
-                    // Get the cropped canvas
-                    var croppedCanvas = cropper.getCroppedCanvas({
-                        width: 200, // set the desired width
-                        height: 200, // set the desired height
+                    var cropper = new Cropper(cropperImage, {
+                        aspectRatio: 1, // square aspect ratio
+                        viewMode: 1, // restrict the cropped area to be within the container
+                        autoCropArea: 1, // automatically fit the cropped area to the container
                     });
 
-                    // Convert the cropped canvas to a base64 encoded URL
-                    var croppedDataURL = croppedCanvas.toDataURL();
+                    document.getElementById('crop-button').addEventListener('click', function() {
+                        // Get the cropped canvas
+                        var croppedCanvas = cropper.getCroppedCanvas({
+                            width: 200, // set the desired width
+                            height: 200, // set the desired height
+                        });
 
-                    // Display the cropped image for preview
-                    var profilePhotoContainer = document.querySelector('.profile-photo-container');
-                    profilePhotoContainer.innerHTML = '<img src="' + croppedDataURL +
-                        '" alt="Profile Picture">';
+                        // Convert the cropped canvas to a base64 encoded URL
+                        var croppedDataURL = croppedCanvas.toDataURL();
 
-                    // Optionally, you can also submit the cropped image to the server
-                    // by sending croppedDataURL to the server using AJAX
-                });
+                        // Display the cropped image for preview
+                        var profilePhotoContainer = document.querySelector('.profile-photo-container');
+                        profilePhotoContainer.innerHTML = '<img src="' + croppedDataURL +
+                            '" alt="Profile Picture">';
 
-                document.getElementById('upload-button').addEventListener('click', function() {
-                    // Optionally, you can upload the cropped image to the server here
-                    // by sending croppedDataURL to the server using AJAX
-                });
-            };
-            reader.readAsDataURL(file);
-        }
-    });
+                        // Optionally, you can also submit the cropped image to the server
+                        // by sending croppedDataURL to the server using AJAX
+                    });
+
+                    document.getElementById('upload-button').addEventListener('click', function() {
+                        // Optionally, you can upload the cropped image to the server here
+                        // by sending croppedDataURL to the server using AJAX
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+        });
     </script>
 </body>
 

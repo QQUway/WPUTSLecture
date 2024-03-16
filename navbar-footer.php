@@ -11,17 +11,26 @@
 <style>
     body {
         font-family: Arial, sans-serif;
-        /* Change font family to sans-serif */
     }
 </style>
 
 <body>
+    <!-- nasabah -->
     <div class="navbar">
         <a href="#">Home</a>
         <a href="#">Pembayaran</a>
         <a href="#">Profile</a>
         <a href="#">Log Out</a>
     </div>
+
+    <!-- admin -->
+    <div class="navbar">
+        <a href="#">Home</a>
+        <a href="#">Users</a>
+        <a href="#">History</a>
+        <a href="#">Log Out</a>
+    </div>
+
 
     <div class="footer">
         <p>&copy; 2024 KDHH Koperasi. All rights reserved.</p>

@@ -1,16 +1,8 @@
 <?php
-<<<<<<< Updated upstream
 include('connect.php');
 
-=======
->>>>>>> Stashed changes
-// Check if user is logged in and is an admin, if not, redirect to login page
-if(!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] !== 'admin') {
-    header("Location: index.php");
-    exit;
-<<<<<<< Updated upstream
-}
-
+// Initialize $userId variable
+$userId = "";
 
 // Check if user_id is provided in the query string
 if (isset($_GET['user_id'])) {
@@ -33,7 +25,8 @@ if (isset($_GET['user_id'])) {
         $userName = $userData['Nama'];
         $userEmail = $userData['Email'];
         $userAddress = $userData['Alamat'];
-        // You can fetch and assign other user data here
+        $userGender = $userData['Jenis_Kelamin'];
+        $userDateOfBirth = $userData['Tanggal_Lahir'];
 
         // Close prepared statement
         $stmt->close();
@@ -42,6 +35,8 @@ if (isset($_GET['user_id'])) {
         $userName = "User not found";
         $userEmail = "";
         $userAddress = "";
+        $userGender = "";
+        $userDateOfBirth = "";
         // You can assign default values or handle this case as needed
     }
 } else {
@@ -49,9 +44,9 @@ if (isset($_GET['user_id'])) {
     $userName = "User ID not provided";
     $userEmail = "";
     $userAddress = "";
+    $userGender = "";
+    $userDateOfBirth = "";
     // You can assign default values or handle this case as needed
-=======
->>>>>>> Stashed changes
 }
 
 ?>
@@ -62,70 +57,78 @@ if (isset($_GET['user_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="resource/css/navbar-footer.css">
-    <title>Users List</title>
+    <title>User Details</title>
 </head>
 
 <body>
     <div class="navbar">
-            <a href="admin_home.php">Home</a>
-            <a href="users.php">Users</a>
-            <a href="logout.php">Log Out</a>
+        <a href="admin_home.php">Home</a>
+        <a href="users.php">Users</a>
+        <a href="logout.php">Log Out</a>
     </div>
 
-    <h1>User List</h1>
+    <h1>User Details</h1>
+
+    <table>
+        <tr>
+            <th>User ID</th>
+            <td><?php echo $userId; ?></td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td><?php echo $userName; ?></td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td><?php echo $userEmail; ?></td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td><?php echo $userAddress; ?></td>
+        </tr>
+        <tr>
+            <th>Gender</th>
+            <td><?php echo $userGender; ?></td>
+        </tr>
+        <tr>
+            <th>Date of Birth</th>
+            <td><?php echo $userDateOfBirth; ?></td>
+        </tr>
+    </table>
+
+    <h2>Pending Transactions</h2>
+
+    <?php
+    // Fetch pending transactions for the user
+    $pendingQuery = $conn->prepare("SELECT * FROM transaction_data WHERE nasabah_id = ? AND status = 'pending'");
+    $pendingQuery->bind_param("i", $userId);
+    $pendingQuery->execute();
+    $pendingResult = $pendingQuery->get_result();
+    ?>
 
     <table>
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Email</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Gender</th>
-                <th>Date of Birth</th>
-                <th>Pending Transactions</th>
+                <th>Transaction ID</th>
+                <th>Amount</th>
+                <th>Category</th>
+                <th>Proof</th>
+                <th>Date</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             <?php
-            include "connect.php";
-
-            // Fetch data from the nasabah table
-            $sql = "SELECT nasabah_id, Email, Nama, Alamat, Jenis_Kelamin, Tanggal_Lahir FROM nasabah";
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                // Output data of each row
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>";
-                    echo "<td>" . $row["nasabah_id"] . "</td>";
-                    echo "<td>" . $row["Email"] . "</td>";
-                    echo "<td>" . $row["Nama"] . "</td>";
-                    echo "<td>" . $row["Alamat"] . "</td>";
-                    echo "<td>" . $row["Jenis_Kelamin"] . "</td>";
-                    echo "<td>" . $row["Tanggal_Lahir"] . "</td>";
-
-                    // Fetch pending transactions for the current user
-                    $pendingQuery = $conn->prepare("SELECT transaction_id FROM transaction_data WHERE nasabah_id = ? AND status = 'pending'");
-                    $pendingQuery->bind_param("i", $row['nasabah_id']);
-                    $pendingQuery->execute();
-                    $pendingResult = $pendingQuery->get_result();
-                    $numPending = $pendingResult->num_rows;
-
-                    echo "<td>";
-                    if ($numPending > 0) {
-                        echo "<a href='pending_transactions.php?nasabah_id=" . $row['nasabah_id'] . "'>View Pending Transactions</a>";
-                    } else {
-                        echo "No Pending Transactions";
-                    }
-                    echo "</td>";
-
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr><td colspan='7'>No users found</td></tr>";
+            while ($row = $pendingResult->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . $row['transaction_id'] . "</td>";
+                echo "<td>" . $row['amount'] . "</td>";
+                echo "<td>" . $row['kategori'] . "</td>";
+                echo "<td><a href='". 'resource/data/' . $row['file_upload_transaction_image_proof'] . "' target='_blank'>View</a></td>";
+                echo "<td>" . $row['tanggal_transfer'] . "</td>";
+                echo "<td><a href='confirm_transaction.php?transaction_id=" . $row['transaction_id'] . "'>Confirm</a></td>";
+                echo "</tr>";
             }
-            $conn->close();
             ?>
         </tbody>
     </table>
@@ -133,19 +136,6 @@ if (isset($_GET['user_id'])) {
     <div class="footer">
         <p>&copy; 2024 KDHH Koperasi. All rights reserved.</p>
     </div>
-
-    <script>
-        function confirmDelete(userId) {
-            if (confirm("Are you sure you want to delete this user?")) {
-                window.location.href = "delete_user.php?user_id=" + userId;
-            }
-        }
-
-
-        function viewProfile(userId) {
-            window.location.href = "user_view.php?user_id=" + userId;
-        }
-    </script>
 </body>
 
 </html>

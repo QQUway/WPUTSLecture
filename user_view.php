@@ -49,6 +49,17 @@ if (isset($_GET['user_id'])) {
     // You can assign default values or handle this case as needed
 }
 
+
+// Fetch transaction data for the user from the transaction_data table
+$sqlTransactions = "SELECT * FROM transaction_data WHERE nasabah_id = ?";
+$stmtTransactions = $conn->prepare($sqlTransactions);
+$stmtTransactions->bind_param("i", $userId);
+$stmtTransactions->execute();
+$resultTransactions = $stmtTransactions->get_result();
+$stmtTransactions->close();
+?>
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

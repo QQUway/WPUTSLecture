@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="resource\css\nasabah.css">
-    <link rel="stylesheet" type="text/css" href="resource\css\navbar-footer.css">
-    <!-- You can include other CSS files here if needed -->
+
+    <link rel="stylesheet" type="text/css" href="resource/css/navbar-footer.css">
+
 </head>
+
 <body>
+
     <div class="navbar">
         <a href="nasabah_home.php">Home</a>
         <a href="transaction_page.php">Pembayaran</a>
@@ -26,6 +30,7 @@
             <a href="#about" class="btn">Learn More</a>
         </div>
     </section>
+
 
     <!-- About Us Section -->
     <section id="about" class="about">
@@ -55,6 +60,7 @@
             <p>Saldo: <?php echo $row['saldo']; ?></p>
             <p>Wajib: <?php echo $row['wajib']; ?></p>
             <p>Sukarela: <?php echo $row['sukarela']; ?></p>
+
         </div>
     </section>
 
@@ -75,4 +81,5 @@
     </footer>
 
 </body>
+
 </html>

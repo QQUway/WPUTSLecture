@@ -1,7 +1,6 @@
-
 <?php
 // Check if user is logged in and is an admin, if not, redirect to login page
-if(!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] !== 'admin') {
+if (!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] !== 'admin') {
     header("Location: index.php");
     exit;
 }
@@ -18,11 +17,13 @@ if(!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] 
 </head>
 
 <body>
+
 <div class="navbar">
         <a href="admin_home.php">Home</a>
         <a href="users.php">Users</a>
         <a href="logout.php">Log Out</a>
 </div>
+
 
     <h1>User List</h1>
 
@@ -80,17 +81,16 @@ if(!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] 
     </div>
 
     <script>
-        function confirmDelete(userId) {
-            if (confirm("Are you sure you want to delete this user?")) {
-                window.location.href = "delete_user.php?user_id=" + userId;
-            }
+    function confirmDelete(userId) {
+        if (confirm("Are you sure you want to delete this user?")) {
+            window.location.href = "delete_user.php?user_id=" + userId;
         }
+    }
 
 
-        function viewProfile(userId) {
-            window.location.href = "user_view.php?user_id=" + userId;
-        }
-
+    function viewProfile(userId) {
+        window.location.href = "user_view.php?user_id=" + userId;
+    }
     </script>
 </body>
 

@@ -4,7 +4,6 @@ if (!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role']
     header("Location: index.php");
     exit;
 }
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,12 +24,6 @@ if (!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role']
         <a href="logout.php">Log Out</a>
 </div>
 
-    <div class="navbar">
-        <a href="admin_home.php">Home</a>
-        <a href="users.php">Users</a>
-        <a href="history.php">History</a>
-        <a href="logout.php">Log Out</a>
-    </div>
 
     <div>
         <h2>Welcome admin!</h2>

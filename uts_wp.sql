@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2024 at 04:58 AM
+-- Generation Time: Mar 18, 2024 at 06:29 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -66,7 +66,9 @@ CREATE TABLE `nasabah` (
 
 INSERT INTO `nasabah` (`nasabah_id`, `user_id`, `Email`, `Nama`, `Alamat`, `Jenis_Kelamin`, `Tanggal_Lahir`, `Upload_File_Bukti_Pembayaran_Bayaran_Simpanan_Pokok`, `saldo`, `wajib`, `sukarela`) VALUES
 (5, 1, 'Admin@localhost.kdhh', 'Admin', 'lelekuda', 'Laki-laki', '2004-03-10', 'Melancholic Ensemble Album Cover.png', 0.00, 0.00, 0.00),
-(7, 2, 'rifqihabib04@gmail.com', 'Rifqi', 'Rifqihabib04', 'Laki-laki', '2004-03-10', 'Melancholic Ensemble Album Cover.png', 0.00, 0.00, 0.00);
+(8, 2, 'rifqihabib04@gmail.com', 'rifqi', 'rifqi02', 'Laki-laki', '2004-10-03', 'Screenshot 2022-03-17 203934.png', 0.00, 0.00, 0.00),
+(9, 3, 'haya@amel.nt', 'haya', 'haya', 'Laki-laki', '3912-10-09', 'mio.png', 0.00, 0.00, 0.00),
+(10, 4, 'bian@bian.bian', 'bian', 'bian', 'Laki-laki', '1000-10-10', 'mio.png', 0.00, 0.00, 0.00);
 
 -- --------------------------------------------------------
 
@@ -90,8 +92,11 @@ CREATE TABLE `transaction_data` (
 --
 
 INSERT INTO `transaction_data` (`transaction_id`, `status`, `nasabah_id`, `admin_id`, `kategori`, `amount`, `file_upload_transaction_image_proof`, `tanggal_transfer`) VALUES
-(4, 'pending', 7, NULL, 'Sukarela', 20000.00, 'ssse.png', '0000-00-00'),
-(5, 'pending', 7, NULL, 'Wajib', 20000.00, 'mio.png', '0000-00-00');
+(7, 'verified', 8, NULL, 'Wajib', 200000.00, 'mio.png', '0000-00-00'),
+(8, 'verified', 8, NULL, 'Wajib', 200000.00, 'mio.png', '0000-00-00'),
+(9, 'verified', 8, NULL, 'Wajib', 200000.00, 'mio.png', '0000-00-00'),
+(10, 'verified', 8, NULL, 'Wajib', 20000.00, 'mio.png', '0000-00-00'),
+(11, 'pending', 8, NULL, 'Wajib', 200000.00, 'mio.png', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -111,7 +116,9 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `username`, `password`) VALUES
 (1, 'Admin', '$2y$10$t/3HY2nBVKdtPcCtAMJyr.18Ysc7ZB8JFOvSpFJnx8cgQmKg.onp2'),
-(2, 'Rifqi', '$2y$10$YYY3wONFhtfx9dbpAWOIVueMiObAmVpTk42JG3XxU8qSN4NPGOXiG');
+(2, 'Rifqi', '$2y$10$AHfDJdwo6QUzjKSZHIHPquL4lUa3t6Y6XnSzxl1QVQm3tMAIPKwXu'),
+(3, 'haya', '$2y$10$waFkvkgpzVR46VGdfsTvXu9KlaIeXtthr7pqi/oUydrw744GFIwqS'),
+(4, 'bian', '$2y$10$PEN0sM8BfYYDFJQDv540WuI83vgiGEt4vR13zTlnXGZOd6vND9Lh6');
 
 --
 -- Indexes for dumped tables
@@ -154,13 +161,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `nasabah`
 --
 ALTER TABLE `nasabah`
-  MODIFY `nasabah_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `nasabah_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `transaction_data`
 --
 ALTER TABLE `transaction_data`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
@@ -182,7 +189,7 @@ ALTER TABLE `nasabah`
 -- Constraints for table `transaction_data`
 --
 ALTER TABLE `transaction_data`
-  ADD CONSTRAINT `transaction_data_ibfk_1` FOREIGN KEY (`nasabah_id`) REFERENCES `nasabah` (`nasabah_id`),
+  ADD CONSTRAINT `transaction_data_ibfk_1` FOREIGN KEY (`nasabah_id`) REFERENCES `nasabah` (`nasabah_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `transaction_data_ibfk_2` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`);
 COMMIT;
 

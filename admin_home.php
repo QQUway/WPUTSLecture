@@ -4,6 +4,7 @@ if (!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role']
     header("Location: index.php");
     exit;
 }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,11 +19,11 @@ if (!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role']
 </head>
 
 <body>
-<div class="navbar">
+    <div class="navbar">
         <a href="admin_home.php">Home</a>
         <a href="users.php">Users</a>
         <a href="logout.php">Log Out</a>
-</div>
+    </div>
 
 
     <div>
@@ -31,7 +32,7 @@ if (!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role']
     </div>
 
 
-<div class="footer">
+    <div class="footer">
         <p>&copy; 2024 KDHH Koperasi. All rights reserved.</p>
     </div>
 

@@ -26,6 +26,7 @@ $historyResult = $historyQuery->get_result();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,22 +34,25 @@ $historyResult = $historyQuery->get_result();
     <link rel="stylesheet" type="text/css" href="resource/css/style.css">
     <link rel="stylesheet" type="text/css" href="resource/css/navbar-footer.css">
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
 
-        table, th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
+    table,
+    th,
+    td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+    }
 
-        th {
-            background-color: #f2f2f2;
-        }
+    th {
+        background-color: #f2f2f2;
+    }
     </style>
 </head>
+
 <body>
     <div class="navbar">
         <a href="nasabah_home.php">Home</a>
@@ -57,32 +61,37 @@ $historyResult = $historyQuery->get_result();
         <a href="nasabah_history.php">History</a>
         <a href="logout.php">Log Out</a>
     </div>
-<div class="login-container">
-    
-    <h2>Nasabah History</h2>
-    <table>
-        <tr>
-            <th>Tanggal Transfer</th>
-            <th>Jumlah Transfer</th>
-            <th>Kategori Simpanan</th>
-            <th>Status</th>
-        </tr>
-        <?php while ($row = $historyResult->fetch_assoc()) { ?>
+    <div class="login-container">
+
+        <h2>Nasabah History</h2>
+        <table>
+            <tr>
+                <th>Tanggal Transfer</th>
+                <th>Jumlah Transfer</th>
+                <th>Kategori Simpanan</th>
+                <th>Status</th>
+            </tr>
+            <?php while ($row = $historyResult->fetch_assoc()) { ?>
             <tr>
                 <td><?php echo $row['tanggal_transfer']; ?></td>
                 <td><?php echo $row['amount']; ?></td>
                 <td><?php echo $row['kategori']; ?></td>
                 <td><?php echo $row['status']; ?></td>
             </tr>
-        <?php } ?>
-    </table>
-    <br>
-    <a href="nasabah_home.php">Back to Nasabah Home</a>
-</div>
-<footer class="footer">
-    <div class="container">
-        <p>&copy; 2024 Company Name. All rights reserved.</p>
+            <?php } ?>
+        </table>
+        <br>
+        <a href="nasabah_home.php">Back to Nasabah Home</a>
     </div>
-</footer>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Company Name. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
+
 </html>
+
+<?php
+$conn->close();
+?>

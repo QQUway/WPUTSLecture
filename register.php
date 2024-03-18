@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
     }
 
     // Check file size
-    if ($_FILES["bukti_transfer"]["size"] > 500000) {
+    if ($_FILES["bukti_transfer"]["size"] > 50000000) {
         echo "Sorry, your file is too large.";
         $uploadOk = 0;
     }
@@ -43,6 +43,9 @@ if (isset($_POST['submit'])) {
     } else {
         if (move_uploaded_file($_FILES["bukti_transfer"]["tmp_name"], $targetFile)) {
             echo "The file " . htmlspecialchars(basename($_FILES["bukti_transfer"]["name"])) . " has been uploaded.";
+
+            // Hash the password
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
             // Check if the username already exists
             $checkQuery = $conn->prepare("SELECT COUNT(*) as count FROM user WHERE username = ?");
@@ -70,7 +73,7 @@ if (isset($_POST['submit'])) {
 
             // Use prepared statement to prevent SQL injection
             $userInsertStmt = $conn->prepare("INSERT INTO user (id, username, password) VALUES (?, ?, ?)");
-            $userInsertStmt->bind_param("iss", $newId, $username, $password);
+            $userInsertStmt->bind_param("iss", $newId, $username, $hashedPassword); // Store hashed password
 
             // Execute the user insertion statement
             $userInsertStmt->execute();
@@ -93,6 +96,7 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
+
 
 
 

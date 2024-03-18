@@ -32,21 +32,28 @@ if (!isset($_COOKIE['username'])) {
     </div>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Welcome to Our System</h1>
-            <p>We provide innovative solutions for your financial needs.</p>
-            <a href="#about" class="btn">Learn More</a>
-        </div>
-    </section>
+    <div class="container">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Welcome to Our System</h1>
+                <p>We provide innovative solutions for your financial needs.</p>
+
+            </div>
+        </section>
+    </div>
 
 
     <!-- About Us Section -->
     <section id="about" class="about">
+
         <div class="container">
             <h2>About Us</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam luctus dolor nec ex volutpat, a dapibus elit rutrum. Integer sed risus ut orci consequat consectetur. Nulla facilisi. Aliquam nec tortor a risus gravida varius.</p>
-            <p>Nulla nec eros in libero dignissim gravida nec eget nunc. Curabitur quis lacus eget quam blandit vulputate a at erat. In ut dui non lorem consectetur auctor et at libero. Aliquam erat volutpat. Integer luctus augue at velit bibendum, vel sodales eros fermentum.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam luctus dolor nec ex volutpat, a dapibus
+                elit rutrum. Integer sed risus ut orci consequat consectetur. Nulla facilisi. Aliquam nec tortor a risus
+                gravida varius.</p>
+            <p>Nulla nec eros in libero dignissim gravida nec eget nunc. Curabitur quis lacus eget quam blandit
+                vulputate a at erat. In ut dui non lorem consectetur auctor et at libero. Aliquam erat volutpat. Integer
+                luctus augue at velit bibendum, vel sodales eros fermentum.</p>
         </div>
     </section>
 
@@ -78,7 +85,7 @@ if (!isset($_COOKIE['username'])) {
         <div class="container">
             <h2>Contact Us</h2>
             <p>If you have any questions, feel free to contact us.</p>
-            <a href="contact.php" class="btn">Contact</a>
+            <a href="mailto:contact@kdhh-koperasi.com" class="btn">Contact</a>
         </div>
     </section>
 

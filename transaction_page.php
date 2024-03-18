@@ -82,6 +82,7 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -91,6 +92,7 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" type="text/css" href="resource/css/navbar-footer.css">
 
 </head>
+
 <body>
     <div class="navbar">
         <a href="nasabah_home.php">Home</a>
@@ -99,30 +101,27 @@ if (isset($_POST['submit'])) {
         <a href="nasabah_history.php">History</a>
         <a href="logout.php">Log Out</a>
     </div>
-<div class="login-container">
-    <h2>Perform Transaction</h2>
-    <form action="transaction_page.php" method="post" enctype="multipart/form-data">
-        <label for="amount">Amount:</label>
-        <input type="text" id="amount" name="amount" required><br><br>
+    <div class="login-container">
+        <h2>Perform Transaction</h2>
+        <form action="transaction_page.php" method="post" enctype="multipart/form-data">
+            <label for="amount">Amount:</label>
+            <input type="text" id="amount" name="amount" required><br><br>
 
-        <label for="kategori">Kategori Simpanan:</label>
-        <select id="kategori" name="kategori" required>
-            <option value="Wajib">Wajib</option>
-            <option value="Sukarela">Sukarela</option>
-        </select><br><br>
+            <label for="kategori">Kategori Simpanan:</label>
+            <select id="kategori" name="kategori" required>
+                <option value="Wajib">Wajib</option>
+                <option value="Sukarela">Sukarela</option>
+            </select><br><br>
 
-        <label for="bukti_transfer">Upload Bukti Transfer:</label>
-        <input type="file" id="bukti_transfer" name="bukti_transfer" required><br><br>
+            <label for="bukti_transfer">Upload Bukti Transfer:</label>
+            <input type="file" id="bukti_transfer" name="bukti_transfer" required><br><br>
 
-        <input type="submit" id="submit" name="submit" value="Submit">
-    </form>
-    <br>
-    <a href="nasabah_home.php">Back to Nasabah Home</a>
-</div>
-<footer class="footer">
-    <div class="container">
-        <p>&copy; 2024 Company Name. All rights reserved.</p>
+            <input type="submit" id="submit" name="submit" value="Submit">
+        </form>
+        <br>
+        <a href="nasabah_home.php">Back to Nasabah Home</a>
     </div>
-</footer>
+
 </body>
+
 </html>

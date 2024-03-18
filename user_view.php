@@ -68,7 +68,36 @@ $historyQuery->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="resource/css/navbar-footer.css">
+    <link rel="stylesheet" type="text/css" href="resource/css/style.css">
     <title>User Details</title>
+
+    <style>
+    .container {
+        width: 80%;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th,
+    td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+    </style>
 </head>
 
 <body>
@@ -77,72 +106,72 @@ $historyQuery->close();
         <a href="users.php">Users</a>
         <a href="logout.php">Log Out</a>
     </div>
+    <div class="container">
+        <h1>User Details</h1>
 
-    <h1>User Details</h1>
-
-    <table>
-        <tr>
-            <th>User ID</th>
-            <td><?php echo $userId; ?></td>
-        </tr>
-        <tr>
-            <th>Name</th>
-            <td><?php echo $userName; ?></td>
-        </tr>
-        <tr>
-            <th>Email</th>
-            <td><?php echo $userEmail; ?></td>
-        </tr>
-        <tr>
-            <th>Address</th>
-            <td><?php echo $userAddress; ?></td>
-        </tr>
-        <tr>
-            <th>Gender</th>
-            <td><?php echo $userGender; ?></td>
-        </tr>
-        <tr>
-            <th>Date of Birth</th>
-            <td><?php echo $userDateOfBirth; ?></td>
-        </tr>
-    </table>
-
-    <h2>Transaction History</h2>
-
-    <table>
-        <thead>
+        <table>
             <tr>
-                <th>Transaction ID</th>
-                <th>Amount</th>
-                <th>Category</th>
-                <th>Proof</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th style="width: 20%;">User ID</th>
+                <td style="width: 80%;"><?php echo $userId; ?></td>
             </tr>
-        </thead>
-        <tbody>
-            <?php
-            while ($row = $historyResult->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>" . $row['transaction_id'] . "</td>";
-                echo "<td>" . $row['amount'] . "</td>";
-                echo "<td>" . $row['kategori'] . "</td>";
-                echo "<td><a href='". 'resource/data/' . $row['file_upload_transaction_image_proof'] . "' target='_blank'>View</a></td>";
-                echo "<td>" . $row['tanggal_transfer'] . "</td>";
-                echo "<td>" . $row['status'] . "</td>";
-                // Add confirm action only if the transaction status is pending
-                if ($row['status'] === 'pending') {
-                    echo "<td><a href='confirm_transaction.php?transaction_id=" . $row['transaction_id'] . "'>Confirm</a></td>";
-                } else {
-                    echo "<td></td>"; // Empty cell for non-pending transactions
-                }
-                echo "</tr>";
-            }
-            ?>
-        </tbody>
-    </table>
+            <tr>
+                <th style="width: 20%;">Name</th>
+                <td style="width: 80%;"><?php echo $userName; ?></td>
+            </tr>
+            <tr>
+                <th style="width: 20%;">Email</th>
+                <td style="width: 80%;"><?php echo $userEmail; ?></td>
+            </tr>
+            <tr>
+                <th style="width: 20%;">Address</th>
+                <td style="width: 80%;"><?php echo $userAddress; ?></td>
+            </tr>
+            <tr>
+                <th style="width: 20%;">Gender</th>
+                <td style="width: 80%;"><?php echo $userGender; ?></td>
+            </tr>
+            <tr>
+                <th style="width: 20%;">Date of Birth</th>
+                <td style="width: 80%;"><?php echo $userDateOfBirth; ?></td>
+            </tr>
+        </table>
 
+        <h2>Transaction History</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 10%;">Transaction ID</th>
+                    <th style="width: 10%;">Amount</th>
+                    <th style="width: 15%;">Category</th>
+                    <th style="width: 15%;">Proof</th>
+                    <th style="width: 15%;">Date</th>
+                    <th style="width: 15%;">Status</th>
+                    <th style="width: 10%;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                while ($row = $historyResult->fetch_assoc()) {
+                    echo "<tr>";
+                    echo "<td>" . $row['transaction_id'] . "</td>";
+                    echo "<td>" . $row['amount'] . "</td>";
+                    echo "<td>" . $row['kategori'] . "</td>";
+                    echo "<td><a href='" . 'resource/data/' . $row['file_upload_transaction_image_proof'] . "' target='_blank'>View</a></td>";
+                    echo "<td>" . $row['tanggal_transfer'] . "</td>";
+                    echo "<td>" . $row['status'] . "</td>";
+                    // Add confirm action only if the transaction status is pending
+                    if ($row['status'] === 'pending') {
+                        echo "<td><a href='confirm_transaction.php?transaction_id=" . $row['transaction_id'] . "'>Confirm</a></td>";
+                    } else {
+                        echo "<td></td>"; // Empty cell for non-pending transactions
+                    }
+                    echo "</tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
 
 </body>
 

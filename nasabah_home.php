@@ -82,12 +82,6 @@ if (!isset($_COOKIE['username'])) {
         </div>
     </section>
 
-    <!-- Footer Section -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 Company Name. All rights reserved.</p>
-        </div>
-    </footer>
 
 </body>
 

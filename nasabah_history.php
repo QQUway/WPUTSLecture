@@ -79,10 +79,6 @@ $historyResult = $historyQuery->get_result();
     <br>
     <a href="nasabah_home.php">Back to Nasabah Home</a>
 </div>
-<footer class="footer">
-    <div class="container">
-        <p>&copy; 2024 Company Name. All rights reserved.</p>
-    </div>
-</footer>
+
 </body>
 </html>

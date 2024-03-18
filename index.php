@@ -13,7 +13,12 @@ include("connect.php");
 </head>
 
 <body>
+    <div class="navbar">
+        <a href="about.php">Home</a>
+        <a href="index.php">Log In</a>
+    </div>
     <div class="login-container">
+    <iframe src="https://show.co/social-unlock/6cq55VMPFBC1WdFCXolYCc/widget" width="100%" height="300" frameborder="0"></iframe>
         <h2>Login</h2>
         <form name="form" action="login.php" method="post">
             <label for="username">Username:</label>

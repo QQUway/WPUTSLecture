@@ -1,6 +1,9 @@
 <?php
-include('connect.php');
-
+// Check if user is logged in and is an admin, if not, redirect to login page
+if (!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] !== 'admin') {
+    header("Location: index.php");
+    exit;
+}
 // Initialize $userId variable
 $userId = "";
 
@@ -49,17 +52,13 @@ if (isset($_GET['user_id'])) {
     // You can assign default values or handle this case as needed
 }
 
-
-// Fetch transaction data for the user from the transaction_data table
-$sqlTransactions = "SELECT * FROM transaction_data WHERE nasabah_id = ?";
-$stmtTransactions = $conn->prepare($sqlTransactions);
-$stmtTransactions->bind_param("i", $userId);
-$stmtTransactions->execute();
-$resultTransactions = $stmtTransactions->get_result();
-$stmtTransactions->close();
+// Fetch transaction history for the user
+$historyQuery = $conn->prepare("SELECT * FROM transaction_data WHERE nasabah_id = ?");
+$historyQuery->bind_param("i", $userId);
+$historyQuery->execute();
+$historyResult = $historyQuery->get_result();
+$historyQuery->close();
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -107,15 +106,7 @@ $stmtTransactions->close();
         </tr>
     </table>
 
-    <h2>Pending Transactions</h2>
-
-    <?php
-    // Fetch pending transactions for the user
-    $pendingQuery = $conn->prepare("SELECT * FROM transaction_data WHERE nasabah_id = ? AND status = 'pending'");
-    $pendingQuery->bind_param("i", $userId);
-    $pendingQuery->execute();
-    $pendingResult = $pendingQuery->get_result();
-    ?>
+    <h2>Transaction History</h2>
 
     <table>
         <thead>
@@ -125,19 +116,26 @@ $stmtTransactions->close();
                 <th>Category</th>
                 <th>Proof</th>
                 <th>Date</th>
+                <th>Status</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             <?php
-            while ($row = $pendingResult->fetch_assoc()) {
+            while ($row = $historyResult->fetch_assoc()) {
                 echo "<tr>";
                 echo "<td>" . $row['transaction_id'] . "</td>";
                 echo "<td>" . $row['amount'] . "</td>";
                 echo "<td>" . $row['kategori'] . "</td>";
-                echo "<td><a href='" . 'resource/data/' . $row['file_upload_transaction_image_proof'] . "' target='_blank'>View</a></td>";
+                echo "<td><a href='". 'resource/data/' . $row['file_upload_transaction_image_proof'] . "' target='_blank'>View</a></td>";
                 echo "<td>" . $row['tanggal_transfer'] . "</td>";
-                echo "<td><a href='confirm_transaction.php?transaction_id=" . $row['transaction_id'] . "'>Confirm</a></td>";
+                echo "<td>" . $row['status'] . "</td>";
+                // Add confirm action only if the transaction status is pending
+                if ($row['status'] === 'pending') {
+                    echo "<td><a href='confirm_transaction.php?transaction_id=" . $row['transaction_id'] . "'>Confirm</a></td>";
+                } else {
+                    echo "<td></td>"; // Empty cell for non-pending transactions
+                }
                 echo "</tr>";
             }
             ?>

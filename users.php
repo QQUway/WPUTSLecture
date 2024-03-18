@@ -10,10 +10,10 @@
 
 <body>
     <div class="navbar">
-        <a href="#">Home</a>
-        <a href="#">Users</a>
-        <a href="#">History</a>
-        <a href="#">Log Out</a>
+        <a href="admin_home.php">Home</a>
+        <a href="users.php">Users</a>
+        <a href="history.php">History</a>
+        <a href="logout.php">Log Out</a>
     </div>
 
     <h1>User List</h1>
@@ -70,15 +70,15 @@
     </div>
 
     <script>
-        function confirmDelete(userId) {
-            if (confirm("Are you sure you want to delete this user?")) {
-                window.location.href = "delete_user.php?user_id=" + userId;
-            }
+    function confirmDelete(userId) {
+        if (confirm("Are you sure you want to delete this user?")) {
+            window.location.href = "delete_user.php?user_id=" + userId;
         }
+    }
 
-        function viewProfile(userId) {
-            window.location.href = "user_view.php?user_id=" + userId;
-        }
+    function viewProfile(userId) {
+        window.location.href = "user_view.php?user_id=" + userId;
+    }
     </script>
 </body>
 

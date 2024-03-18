@@ -40,6 +40,14 @@ if (isset($_GET['user_id'])) {
     $userAddress = "";
     // You can assign default values or handle this case as needed
 }
+
+// Fetch transaction data for the user from the transaction_data table
+$sqlTransactions = "SELECT * FROM transaction_data WHERE nasabah_id = ?";
+$stmtTransactions = $conn->prepare($sqlTransactions);
+$stmtTransactions->bind_param("i", $userId);
+$stmtTransactions->execute();
+$resultTransactions = $stmtTransactions->get_result();
+$stmtTransactions->close();
 ?>
 
 <!DOCTYPE html>
@@ -50,9 +58,18 @@ if (isset($_GET['user_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
     <link rel="stylesheet" type="text/css" href="resource/css/profile.css">
+    <link rel="stylesheet" type="text/css" href="resource/css/navbar-footer.css">
 </head>
 
 <body>
+
+    <div class="navbar">
+        <a href="admin_home.php">Home</a>
+        <a href="users.php">Users</a>
+        <a href="history.php">History</a>
+        <a href="logout.php">Log Out</a>
+    </div>
+
     <div class="container">
         <h1>User Profile</h1>
         <div class="profile-info">
@@ -71,8 +88,36 @@ if (isset($_GET['user_id'])) {
 
             </div>
         </div>
+
+        <div class="transaction-list">
+            <h2>Transaction History</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Status</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>Proof</th> <!-- Add column for the view button -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    while ($row = $resultTransactions->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . $row["transaction_id"] . "</td>";
+                        echo "<td>" . $row["status"] . "</td>";
+                        echo "<td>" . $row["kategori"] . "</td>";
+                        echo "<td>" . $row["amount"] . "</td>";
+                        // Add a view button to open the image in a new tab
+                        echo "<td><a href='" . $row["file_upload_transaction_image_proof"] . "' target='_blank'>View</a></td>";
+                        echo "</tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
     </div>
-    </script>
 </body>
 
 </html>

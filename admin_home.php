@@ -1,9 +1,9 @@
 <?php
-    // Check if user is logged in and is an admin, if not, redirect to login page
-    if(!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] !== 'admin') {
-        header("Location: index.php");
-        exit;
-    }
+// Check if user is logged in and is an admin, if not, redirect to login page
+if (!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] !== 'admin') {
+    header("Location: index.php");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,10 +19,10 @@
 <body>
 
     <div class="navbar">
-        <a href="#">Home</a>
-        <a href="#">Users</a>
-        <a href="#">History</a>
-        <a href="#">Log Out</a>
+        <a href="admin_home.php">Home</a>
+        <a href="users.php">Users</a>
+        <a href="history.php">History</a>
+        <a href="logout.php">Log Out</a>
     </div>
 
     <div>

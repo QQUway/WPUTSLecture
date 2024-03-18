@@ -9,10 +9,8 @@
     <title>User List</title>
 
     <style>
-    /* Center the content horizontally */
     .container {
         width: 80%;
-        /* Adjust the width as needed */
         margin: 0 auto;
 
         margin: 50px auto;
@@ -79,11 +77,9 @@
             <tbody>
                 <?php
                 include "connect.php";
-                // Fetch data from the nasabah table
                 $sql = "SELECT nasabah_id, Email, Nama, Alamat, Jenis_Kelamin, Tanggal_Lahir FROM nasabah";
                 $result = $conn->query($sql);
                 if ($result->num_rows > 0) {
-                    // Output data of each row
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>";
                         echo "<td>" . $row["nasabah_id"] . "</td>";

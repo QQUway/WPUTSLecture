@@ -1,7 +1,6 @@
 <?php
 include("connect.php");
 
-// Check if user is logged in, if not, redirect to login page
 if (!isset($_COOKIE['username'])) {
     header("Location: index.php");
     exit;
@@ -31,7 +30,6 @@ if (!isset($_COOKIE['username'])) {
         <a href="logout.php">Log Out</a>
     </div>
 
-    <!-- Hero Section -->
     <div class="container">
         <section class="hero">
             <div class="hero-content">
@@ -43,28 +41,27 @@ if (!isset($_COOKIE['username'])) {
     </div>
 
 
-    <!-- About Us Section -->
     <section id="about" class="about">
 
         <div class="container">
             <h2>About Us</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam luctus dolor nec ex volutpat, a dapibus
-                elit rutrum. Integer sed risus ut orci consequat consectetur. Nulla facilisi. Aliquam nec tortor a risus
-                gravida varius.</p>
-            <p>Nulla nec eros in libero dignissim gravida nec eget nunc. Curabitur quis lacus eget quam blandit
-                vulputate a at erat. In ut dui non lorem consectetur auctor et at libero. Aliquam erat volutpat. Integer
-                luctus augue at velit bibendum, vel sodales eros fermentum.</p>
+            <p>KDHH Koperasi adalah sebuah organisasi koperasi yang berperan penting dalam memajukan kesejahteraan anggotanya di masyarakat. 
+                Sebagai wadah bagi para anggota, KDHH Koperasi memberikan berbagai layanan yang bertujuan untuk meningkatkan kualitas hidup dan ekonomi mereka. 
+                Salah satu layanan utama yang ditawarkan adalah pembayaran wajib dan sukarela.</p>
+            <p>Pembayaran wajib merupakan kontribusi rutin yang harus dibayarkan oleh setiap anggota KDHH Koperasi sesuai dengan ketentuan yang telah ditetapkan. 
+                Pembayaran ini penting untuk membiayai berbagai program dan kegiatan yang dilaksanakan oleh koperasi guna meningkatkan kesejahteraan anggotanya secara kolektif. 
+                Selain itu, anggota juga dapat melakukan pembayaran sukarela sebagai bentuk dukungan tambahan bagi keberlangsungan operasional KDHH Koperasi. 
+                Pembayaran sukarela ini dapat dilakukan secara fleksibel sesuai dengan kemampuan finansial masing-masing anggota, namun memiliki dampak yang signifikan dalam memperkuat fondasi koperasi dan meningkatkan manfaat yang diberikan kepada seluruh anggota. 
+                Dengan partisipasi aktif dalam pembayaran wajib dan sukarela, anggota KDHH Koperasi turut berperan dalam membangun masa depan yang lebih cerah bagi diri mereka sendiri serta komunitas sekitar.</p>
         </div>
     </section>
 
-    <!-- Display Balance Section -->
     <section class="balances">
         <div class="container">
             <h2>Your Balances</h2>
             <?php
             include "connect.php";
-            
-            // Fetch user's balances
+
             $username = $_COOKIE['username'];
             $query = "SELECT saldo, wajib, sukarela FROM nasabah INNER JOIN user ON nasabah.user_id = user.id WHERE user.username = ?";
             $stmt = $conn->prepare($query);
@@ -80,7 +77,6 @@ if (!isset($_COOKIE['username'])) {
         </div>
     </section>
 
-    <!-- Contact Us Section -->
     <section class="contact">
         <div class="container">
             <h2>Contact Us</h2>

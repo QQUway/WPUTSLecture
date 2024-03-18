@@ -15,7 +15,6 @@
 </style>
 
 <body>
-    <!-- nasabah -->
     <div class="navbar">
         <a href="nasabah_home.php">Home</a>
         <a href="transaction_page.php">Pembayaran</a>
@@ -24,7 +23,6 @@
         <a href="logout.php">Log Out</a>
     </div>
 
-    <!-- admin -->
     <div class="navbar">
         <a href="admin_home.php">Home</a>
         <a href="users.php">Users</a>

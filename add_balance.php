@@ -1,18 +1,15 @@
 <?php
 include('connect.php');
 
-// Check if user is logged in and is an admin, if not, redirect to login page
 if (!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] !== 'admin') {
     header("Location: index.php");
     exit;
 }
 
-// Define variables and initialize with empty values
 $userId = $amount = $kategori = "";
 $userIdErr = $amountErr = $kategoriErr = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Validate user input
     if (empty($_POST["userId"])) {
         $userIdErr = "Please select a user";
     } else {
@@ -31,9 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $kategori = $_POST["kategori"];
     }
 
-    // If all fields are filled, proceed to update the balance
     if (!empty($userId) && !empty($amount) && !empty($kategori)) {
-        // Update user's balance based on the selected category
         $updateBalanceQuery = "";
         if ($kategori === 'wajib' || $kategori === 'saldo' || $kategori === 'sukarela') {
             $updateBalanceQuery = $conn->prepare("UPDATE nasabah SET $kategori = $kategori + ? WHERE nasabah_id = ?");
@@ -44,11 +39,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 die("Error: " . $conn->error);
             }
 
-            // Redirect to a success page or display a success message
             header("Location: add_balance.php");
             exit;
         } else {
-            // Invalid category selected
             $kategoriErr = "Invalid category selected";
         }
     }
@@ -72,7 +65,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <select name="userId" id="userId">
                 <option value="">Select a user</option>
                 <?php
-                // Fetch users from the database
                 $usersQuery = $conn->query("SELECT nasabah_id, Nama FROM nasabah");
                 while ($row = $usersQuery->fetch_assoc()) {
                     echo "<option value='" . $row['nasabah_id'] . "'>" . $row['Nama'] . "</option>";

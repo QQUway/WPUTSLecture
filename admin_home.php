@@ -1,5 +1,4 @@
 <?php
-// Check if user is logged in and is an admin, if not, redirect to login page
 if (!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] !== 'admin') {
     header("Location: index.php");
     exit;
@@ -16,7 +15,6 @@ if (!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role']
     <link rel="stylesheet" type="text/css" href="resource/css/style.css">
     <link rel="stylesheet" type="text/css" href="resource/css/navbar-footer.css">
     <style>
-        /* Center the content horizontally */
         .center-content {
             text-align: center;
         }

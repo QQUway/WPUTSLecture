@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #D6D9CE;
     margin: 0;
     padding: 0;
 }
@@ -8,7 +8,7 @@ body {
 .login-container {
     max-width: 400px;
     margin: 50px auto;
-    background-color: #fff;
+    background-color: #F3DAD8;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -17,19 +17,15 @@ body {
 .admin_home {
     max-width: 400px;
     margin: 50px auto;
-    background-color: #fff;
+    background-color: #F3DAD8;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
+h2, h3 {
     text-align: center;
-    color: #333;
-}
-h3 {
-    text-align: center;
-    color: #333;
+    color: black;
 }
 
 form {
@@ -39,7 +35,7 @@ form {
 
 label {
     margin-bottom: 5px;
-    color: #333;
+    color: black;
 }
 
 input {
@@ -50,13 +46,11 @@ input {
 }
 
 #btn {
-    background-color: #4caf50;
-    color: #fff;
+    background-color: #F1B5CB;
+    color: black;
     cursor: pointer;
 }
 
 #btn:hover {
-    background-color: #45a049;
+    background-color: #E88EED;
 }
-
-/* Add more styles as needed */

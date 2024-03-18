@@ -1,59 +1,45 @@
 <?php
 include('connect.php');
-// Check if user is logged in and is an admin, if not, redirect to login page
 if (!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] !== 'admin') {
     header("Location: index.php");
     exit;
 }
-// Initialize $userId variable
 $userId = "";
 
-// Check if user_id is provided in the query string
 if (isset($_GET['user_id'])) {
-    // Sanitize the user ID to prevent SQL injection
     $userId = $_GET['user_id'];
 
-    // Fetch user data from the database based on the user ID
     $sql = "SELECT * FROM nasabah WHERE nasabah_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $userId);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    // Check if user exists
     if ($result->num_rows > 0) {
-        // Fetch user data
         $userData = $result->fetch_assoc();
 
-        // Assign user data to variables
         $userName = $userData['Nama'];
         $userEmail = $userData['Email'];
         $userAddress = $userData['Alamat'];
         $userGender = $userData['Jenis_Kelamin'];
         $userDateOfBirth = $userData['Tanggal_Lahir'];
 
-        // Close prepared statement
         $stmt->close();
     } else {
-        // User with the provided ID does not exist
         $userName = "User not found";
         $userEmail = "";
         $userAddress = "";
         $userGender = "";
         $userDateOfBirth = "";
-        // You can assign default values or handle this case as needed
     }
 } else {
-    // User ID is not provided in the query string
     $userName = "User ID not provided";
     $userEmail = "";
     $userAddress = "";
     $userGender = "";
     $userDateOfBirth = "";
-    // You can assign default values or handle this case as needed
 }
 
-// Fetch transaction history for the user
 $historyQuery = $conn->prepare("SELECT * FROM transaction_data WHERE nasabah_id = ?");
 $historyQuery->bind_param("i", $userId);
 $historyQuery->execute();
@@ -160,11 +146,9 @@ $historyQuery->close();
                     echo "<td><a href='" . 'resource/data/' . $row['file_upload_transaction_image_proof'] . "' target='_blank'>View</a></td>";
                     echo "<td>" . $row['tanggal_transfer'] . "</td>";
                     echo "<td>" . $row['status'] . "</td>";
-                    // Add confirm action only if the transaction status is pending
                     if ($row['status'] === 'pending') {
                         echo "<td><a href='confirm_transaction.php?transaction_id=" . $row['transaction_id'] . "'>Confirm</a></td>";
                     } else {
-                        echo "<td></td>"; // Empty cell for non-pending transactions
                     }
                     echo "</tr>";
                 }

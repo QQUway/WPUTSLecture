@@ -1,13 +1,11 @@
 <?php
 include("connect.php");
 
-// Check if user is logged in, if not, redirect to login page
 if (!isset($_COOKIE['username'])) {
     header("Location: index.php");
     exit;
 }
 
-// Fetch nasabah ID based on username
 $username = $_COOKIE['username'];
 $stmt = $conn->prepare("SELECT nasabah_id FROM nasabah WHERE user_id = (SELECT id FROM user WHERE username = ?)");
 $stmt->bind_param("s", $username);
@@ -17,7 +15,6 @@ $row = $result->fetch_assoc();
 $nasabah_id = $row['nasabah_id'];
 $stmt->close();
 
-// Fetch user data based on nasabah ID
 $userQuery = $conn->prepare("SELECT Nama, Email, Alamat FROM nasabah WHERE nasabah_id = ?");
 $userQuery->bind_param("i", $nasabah_id);
 $userQuery->execute();
@@ -25,7 +22,6 @@ $userResult = $userQuery->get_result();
 $userData = $userResult->fetch_assoc();
 $userQuery->close();
 
-// Assign user data to variables
 $userName = $userData['Nama'];
 $userEmail = $userData['Email'];
 $userAddress = $userData['Alamat'];
@@ -43,7 +39,6 @@ $userAddress = $userData['Alamat'];
     <style>
     .profile-info {
         margin-left: 20px;
-        /* Adjust the margin as needed */
     }
     </style>
 </head>
@@ -74,7 +69,6 @@ $userAddress = $userData['Alamat'];
             </div>
         </div>
 
-        <!-- Form for updating user data -->
         <div class="form-container">
             <h2>Update User Data</h2>
             <form id="update-form">
@@ -91,7 +85,6 @@ $userAddress = $userData['Alamat'];
             </form>
         </div>
 
-        <!-- Form for changing profile photo -->
         <div class="form-container">
             <h2>Change Profile Photo</h2>
             <form id="photo-form">
@@ -100,7 +93,6 @@ $userAddress = $userData['Alamat'];
             </form>
         </div>
 
-        <!-- Form for resetting password -->
         <div class="form-container">
             <h2>Reset Password</h2>
             <form id="password-form">
@@ -142,33 +134,26 @@ $userAddress = $userData['Alamat'];
                 }
 
                 var cropper = new Cropper(cropperImage, {
-                    aspectRatio: 1, // square aspect ratio
-                    viewMode: 1, // restrict the cropped area to be within the container
-                    autoCropArea: 1, // automatically fit the cropped area to the container
+                    aspectRatio: 1, 
+                    viewMode: 1, 
+                    autoCropArea: 1, 
                 });
 
                 document.getElementById('crop-button').addEventListener('click', function() {
-                    // Get the cropped canvas
                     var croppedCanvas = cropper.getCroppedCanvas({
-                        width: 200, // set the desired width
-                        height: 200, // set the desired height
+                        width: 200, 
+                        height: 200, 
                     });
 
-                    // Convert the cropped canvas to a base64 encoded URL
                     var croppedDataURL = croppedCanvas.toDataURL();
 
-                    // Display the cropped image for preview
                     var profilePhotoContainer = document.querySelector('.profile-photo-container');
                     profilePhotoContainer.innerHTML = '<img src="' + croppedDataURL +
                         '" alt="Profile Picture">';
 
-                    // Optionally, you can also submit the cropped image to the server
-                    // by sending croppedDataURL to the server using AJAX
                 });
 
                 document.getElementById('upload-button').addEventListener('click', function() {
-                    // Optionally, you can upload the cropped image to the server here
-                    // by sending croppedDataURL to the server using AJAX
                 });
             };
             reader.readAsDataURL(file);

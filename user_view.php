@@ -1,4 +1,5 @@
 <?php
+include('connect.php');
 // Check if user is logged in and is an admin, if not, redirect to login page
 if (!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] !== 'admin') {
     header("Location: index.php");
@@ -142,9 +143,7 @@ $historyQuery->close();
         </tbody>
     </table>
 
-    <div class="footer">
-        <p>&copy; 2024 KDHH Koperasi. All rights reserved.</p>
-    </div>
+
 </body>
 
 </html>

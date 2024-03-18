@@ -58,21 +58,27 @@ if (isset($_POST['submit'])) {
         if (move_uploaded_file($bukti_transfer["tmp_name"], $targetFile)) {
             echo "The file " . htmlspecialchars(basename($bukti_transfer["name"])) . " has been uploaded.";
 
+            // Get the basename separately
+            $filename = basename($bukti_transfer["name"]);
+
             // Insert the transaction data into the database with current date
             $insertStmt = $conn->prepare("INSERT INTO transaction_data (nasabah_id, kategori, amount, file_upload_transaction_image_proof, status, tanggal_transfer) VALUES (?, ?, ?, ?, 'pending', ?)");
-            $insertStmt->bind_param("issss", $nasabah_id, $kategori, $amount, basename($bukti_transfer["name"]), $tanggal_transfer);
+            $insertStmt->bind_param("issss", $nasabah_id, $kategori, $amount, $filename, $tanggal_transfer);
             $insertStmt->execute();
             $insertStmt->close();
 
             // Redirect to the transaction history page
-            header("Location: nasabah_history.php");
-            exit;
+            // Remove or comment out debugging output before the header() function call
+            // header("Location: nasabah_history.php");
+            // exit;
         } else {
             echo "Sorry, there was an error uploading your file.";
         }
     }
 }
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

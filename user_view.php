@@ -60,7 +60,7 @@ $stmtTransactions->close();
 ?>
 
 
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -135,7 +135,7 @@ $stmtTransactions->close();
                 echo "<td>" . $row['transaction_id'] . "</td>";
                 echo "<td>" . $row['amount'] . "</td>";
                 echo "<td>" . $row['kategori'] . "</td>";
-                echo "<td><a href='". 'resource/data/' . $row['file_upload_transaction_image_proof'] . "' target='_blank'>View</a></td>";
+                echo "<td><a href='" . 'resource/data/' . $row['file_upload_transaction_image_proof'] . "' target='_blank'>View</a></td>";
                 echo "<td>" . $row['tanggal_transfer'] . "</td>";
                 echo "<td><a href='confirm_transaction.php?transaction_id=" . $row['transaction_id'] . "'>Confirm</a></td>";
                 echo "</tr>";

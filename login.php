@@ -53,7 +53,8 @@ if(isset($_POST['submit'])){
             // If the user is not an admin or nasabah, redirect to index.php
             header("Location: index.php");
             exit;
-        } else {
+        } 
+        else {
             // Incorrect password
             echo '<script>
                 alert("Login failed. Incorrect password.");

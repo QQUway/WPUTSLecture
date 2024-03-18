@@ -1,5 +1,11 @@
 <?php
-include('connect.php');
+include("connect.php");
+
+// Check if user is logged in, if not, redirect to login page
+if (!isset($_COOKIE['username'])) {
+    header("Location: index.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>

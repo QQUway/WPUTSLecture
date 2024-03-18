@@ -22,6 +22,7 @@ if (isset($_POST['submit'])) {
     $amount = $_POST['amount'];
     $kategori = $_POST['kategori'];
     $bukti_transfer = $_FILES['bukti_transfer'];
+    $tanggal_transfer = date("Y-m-d"); // Get current date
 
     // Handle file upload
     $targetDir = "resource/data/";
@@ -57,9 +58,9 @@ if (isset($_POST['submit'])) {
         if (move_uploaded_file($bukti_transfer["tmp_name"], $targetFile)) {
             echo "The file " . htmlspecialchars(basename($bukti_transfer["name"])) . " has been uploaded.";
 
-            // Insert the transaction data into the database
-            $insertStmt = $conn->prepare("INSERT INTO transaction_data (nasabah_id, kategori, amount, file_upload_transaction_image_proof, status) VALUES (?, ?, ?, ?, 'pending')");
-            $insertStmt->bind_param("isss", $nasabah_id, $kategori, $amount, basename($bukti_transfer["name"]));
+            // Insert the transaction data into the database with current date
+            $insertStmt = $conn->prepare("INSERT INTO transaction_data (nasabah_id, kategori, amount, file_upload_transaction_image_proof, status, tanggal_transfer) VALUES (?, ?, ?, ?, 'pending', ?)");
+            $insertStmt->bind_param("issss", $nasabah_id, $kategori, $amount, basename($bukti_transfer["name"]), $tanggal_transfer);
             $insertStmt->execute();
             $insertStmt->close();
 

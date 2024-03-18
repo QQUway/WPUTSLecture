@@ -1,10 +1,15 @@
 <?php
-// Check if user is logged in and is an admin, if not, redirect to login page
+// Start session to access cookies
+session_start();
+
+// Check if the user is logged in and has the role of "admin"
 if (!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] !== 'admin') {
-    header("Location: index.php");
+    // Redirect unauthorized users to the index.php page
+    header("Location: nasabah_home.php");
     exit;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,12 +30,10 @@ if (!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role']
         <a href="logout.php">Log Out</a>
     </div>
 
-
     <div>
         <h2>Welcome admin!</h2>
         <p><a href="logout.php">Logout</a></p>
     </div>
-
 
     <div class="footer">
         <p>&copy; 2024 KDHH Koperasi. All rights reserved.</p>

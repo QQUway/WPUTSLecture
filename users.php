@@ -1,6 +1,6 @@
 <?php
 // Check if user is logged in and is an admin, if not, redirect to login page
-if(!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] !== 'admin') {
+if (!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] !== 'admin') {
     header("Location: index.php");
     exit;
 }
@@ -17,12 +17,13 @@ if(!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] 
 </head>
 
 <body>
-    <div class="navbar">
-        <a href="#">Home</a>
-        <a href="#">Users</a>
-        <a href="#">History</a>
-        <a href="#">Log Out</a>
-    </div>
+
+<div class="navbar">
+        <a href="admin_home.php">Home</a>
+        <a href="users.php">Users</a>
+        <a href="logout.php">Log Out</a>
+</div>
+
 
     <h1>User List</h1>
 
@@ -60,7 +61,11 @@ if(!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] 
                     echo "<td>" . $row["Alamat"] . "</td>";
                     echo "<td>" . $row["Jenis_Kelamin"] . "</td>";
                     echo "<td>" . $row["Tanggal_Lahir"] . "</td>";
+
+                    echo "<td><button class='view-btn' onclick='viewProfile(" . $row["nasabah_id"] . ")'>View</button></td>";
                     echo "<td><button class='delete-btn' onclick='confirmDelete(" . $row["nasabah_id"] . ")'>Delete</button></td>";
+
+
                     echo "</tr>";
                 }
             } else {
@@ -76,11 +81,16 @@ if(!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] 
     </div>
 
     <script>
-        function confirmDelete(userId) {
-            if (confirm("Are you sure you want to delete this user?")) {
-                window.location.href = "delete_user.php?user_id=" + userId;
-            }
+    function confirmDelete(userId) {
+        if (confirm("Are you sure you want to delete this user?")) {
+            window.location.href = "delete_user.php?user_id=" + userId;
         }
+    }
+
+
+    function viewProfile(userId) {
+        window.location.href = "user_view.php?user_id=" + userId;
+    }
     </script>
 </body>
 

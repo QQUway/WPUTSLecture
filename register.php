@@ -90,8 +90,12 @@ if (isset($_POST['submit'])) {
             $nasabahInsertStmt->close();
 
             echo "Registration successful! Your ID is: " . sprintf('%04d', $newId);
+            echo '<script>  
+                    window.location.href = "index.php";
+                </script>';
         } else {
             echo "Sorry, there was an error uploading your file.";
+            
         }
     }
 }
@@ -143,6 +147,10 @@ if (isset($_POST['submit'])) {
         <input type="submit" id="btn" value="Register" name="submit">
     </form>
 </div>
-
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2024 Company Name. All rights reserved.</p>
+    </div>
+</footer>
 </body>
 </html>

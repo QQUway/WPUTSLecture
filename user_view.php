@@ -1,6 +1,9 @@
 <?php
 include('connect.php');
 
+// Initialize $userId variable
+$userId = "";
+
 // Check if user_id is provided in the query string
 if (isset($_GET['user_id'])) {
     // Sanitize the user ID to prevent SQL injection
@@ -22,7 +25,8 @@ if (isset($_GET['user_id'])) {
         $userName = $userData['Nama'];
         $userEmail = $userData['Email'];
         $userAddress = $userData['Alamat'];
-        // You can fetch and assign other user data here
+        $userGender = $userData['Jenis_Kelamin'];
+        $userDateOfBirth = $userData['Tanggal_Lahir'];
 
         // Close prepared statement
         $stmt->close();
@@ -31,6 +35,8 @@ if (isset($_GET['user_id'])) {
         $userName = "User not found";
         $userEmail = "";
         $userAddress = "";
+        $userGender = "";
+        $userDateOfBirth = "";
         // You can assign default values or handle this case as needed
     }
 } else {
@@ -38,8 +44,11 @@ if (isset($_GET['user_id'])) {
     $userName = "User ID not provided";
     $userEmail = "";
     $userAddress = "";
+    $userGender = "";
+    $userDateOfBirth = "";
     // You can assign default values or handle this case as needed
 }
+
 
 // Fetch transaction data for the user from the transaction_data table
 $sqlTransactions = "SELECT * FROM transaction_data WHERE nasabah_id = ?";
@@ -50,73 +59,93 @@ $resultTransactions = $stmtTransactions->get_result();
 $stmtTransactions->close();
 ?>
 
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
-    <link rel="stylesheet" type="text/css" href="resource/css/profile.css">
     <link rel="stylesheet" type="text/css" href="resource/css/navbar-footer.css">
+    <title>User Details</title>
 </head>
 
 <body>
-
     <div class="navbar">
         <a href="admin_home.php">Home</a>
         <a href="users.php">Users</a>
-        <a href="history.php">History</a>
         <a href="logout.php">Log Out</a>
     </div>
 
-    <div class="container">
-        <h1>User Profile</h1>
-        <div class="profile-info">
-            <div class="profile-photo-container">
-                <img id="profile-img" src="default-profile-pic.jpg" alt="Profile Picture">
-            </div>
-            <div class="biodata">
-                <label for="customer-name">Name:</label>
-                <p id="customer-name"><?php echo $userName; ?></p>
+    <h1>User Details</h1>
 
-                <label for="customer-email">Email:</label>
-                <p id="customer-email"><?php echo $userEmail; ?></p>
+    <table>
+        <tr>
+            <th>User ID</th>
+            <td><?php echo $userId; ?></td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td><?php echo $userName; ?></td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td><?php echo $userEmail; ?></td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td><?php echo $userAddress; ?></td>
+        </tr>
+        <tr>
+            <th>Gender</th>
+            <td><?php echo $userGender; ?></td>
+        </tr>
+        <tr>
+            <th>Date of Birth</th>
+            <td><?php echo $userDateOfBirth; ?></td>
+        </tr>
+    </table>
 
-                <label for="customer-address">Address:</label>
-                <p id="customer-address"><?php echo $userAddress; ?></p>
+    <h2>Pending Transactions</h2>
 
-            </div>
-        </div>
+    <?php
+    // Fetch pending transactions for the user
+    $pendingQuery = $conn->prepare("SELECT * FROM transaction_data WHERE nasabah_id = ? AND status = 'pending'");
+    $pendingQuery->bind_param("i", $userId);
+    $pendingQuery->execute();
+    $pendingResult = $pendingQuery->get_result();
+    ?>
 
-        <div class="transaction-list">
-            <h2>Transaction History</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Transaction ID</th>
-                        <th>Status</th>
-                        <th>Category</th>
-                        <th>Amount</th>
-                        <th>Proof</th> <!-- Add column for the view button -->
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    while ($row = $resultTransactions->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td>" . $row["transaction_id"] . "</td>";
-                        echo "<td>" . $row["status"] . "</td>";
-                        echo "<td>" . $row["kategori"] . "</td>";
-                        echo "<td>" . $row["amount"] . "</td>";
-                        // Add a view button to open the image in a new tab
-                        echo "<td><a href='" . $row["file_upload_transaction_image_proof"] . "' target='_blank'>View</a></td>";
-                        echo "</tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Transaction ID</th>
+                <th>Amount</th>
+                <th>Category</th>
+                <th>Proof</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            while ($row = $pendingResult->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . $row['transaction_id'] . "</td>";
+                echo "<td>" . $row['amount'] . "</td>";
+                echo "<td>" . $row['kategori'] . "</td>";
+                echo "<td><a href='". 'resource/data/' . $row['file_upload_transaction_image_proof'] . "' target='_blank'>View</a></td>";
+                echo "<td>" . $row['tanggal_transfer'] . "</td>";
+                echo "<td><a href='confirm_transaction.php?transaction_id=" . $row['transaction_id'] . "'>Confirm</a></td>";
+                echo "</tr>";
+            }
+            ?>
+        </tbody>
+    </table>
+
+    <div class="footer">
+        <p>&copy; 2024 KDHH Koperasi. All rights reserved.</p>
     </div>
 </body>
 

@@ -1,6 +1,11 @@
 <?php
+// Start session to access cookies
+session_start();
+
+// Check if the user is logged in and has the role of "admin"
 if (!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] !== 'admin') {
-    header("Location: index.php");
+    // Redirect unauthorized users to the index.php page
+    header("Location: nasabah_home.php");
     exit;
 }
 ?>

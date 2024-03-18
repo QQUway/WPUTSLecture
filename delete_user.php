@@ -20,6 +20,7 @@ if (isset($_GET['user_id'])) {
 
         if ($stmtNasabah->execute() && $stmtUser->execute()) {
             echo "User deleted successfully from both tables.";
+            header("Location: users.php");
         } else {
             echo "Error deleting user: " . $stmtNasabah->error . " " . $stmtUser->error;
         }

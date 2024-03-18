@@ -147,8 +147,10 @@ $historyQuery->close();
                     echo "<td>" . $row['tanggal_transfer'] . "</td>";
                     echo "<td>" . $row['status'] . "</td>";
                     if ($row['status'] === 'pending') {
-                        echo "<td><a href='confirm_transaction.php?transaction_id=" . $row['transaction_id'] . "'>Confirm</a></td>";
+                        echo "<td><a href='confirm_transaction.php?transaction_id=" . $row['transaction_id'] . "'><button class='actions-btn'>Confirm</button></a></td>";
+
                     } else {
+                        echo "<td></td>";
                     }
                     echo "</tr>";
                 }

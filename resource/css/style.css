@@ -51,6 +51,22 @@ input {
     cursor: pointer;
 }
 
+
+
 #btn:hover {
+    background-color: #E88EED;
+}
+
+.actions-btn {
+    padding: 5px 10px;
+    border: none;
+    background-color: #F1B5CB;
+    color: white;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+
+.actions-btn:hover {
     background-color: #E88EED;
 }

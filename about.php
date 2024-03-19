@@ -56,7 +56,7 @@ include("connect.php");
         <div class="container">
             <h2>Contact Us</h2>
             <p>If you have any questions, feel free to contact us.</p>
-            <a href="mailto:contact@kdhh-koperasi.com" class="btn">Contact</a>
+            <a href="mailto:contact@kdhh-koperasi.com" class="btn" style="color: #e88eed;">Contact</a>
         </div>
     </section>
    

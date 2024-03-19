@@ -15,7 +15,6 @@
 </style>
 
 <body>
-    <!-- nasabah -->
     <div class="navbar">
         <a href="#">Home</a>
         <a href="#">Pembayaran</a>
@@ -23,7 +22,6 @@
         <a href="#">Log Out</a>
     </div>
 
-    <!-- admin -->
     <div class="navbar">
         <a href="#">Home</a>
         <a href="#">Users</a>

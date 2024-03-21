@@ -16,6 +16,7 @@ include("connect.php");
     <div class="navbar">
         <a href="about.php">Home</a>
         <a href="index.php">Log In</a>
+        <a href="register.php">Register</a>
     </div>
     <div class="login-container">
     <iframe src="https://show.co/social-unlock/6cq55VMPFBC1WdFCXolYCc/widget" width="100%" height="300" frameborder="0"></iframe>
@@ -32,9 +33,7 @@ include("connect.php");
         <p>Don't have an account? <a href="register.php">Register Now.</a></p>
     </div>
 
-    <div class="footer">
-        <p>&copy; 2024 KDHH Koperasi. All rights reserved.</p>
-    </div>
+    
 
 </body>
 

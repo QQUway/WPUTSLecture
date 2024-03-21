@@ -95,9 +95,16 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Form</title>
-    <link rel="stylesheet" type="text/css" href="resource/css/style.css">
+    <link rel="stylesheet" type="text/css" href="resource/css/style.css">    
+    <link rel="stylesheet" type="text/css" href="resource/css/navbar-footer.css">
 </head>
 <body>
+
+    <div class="navbar">
+        <a href="about.php">Home</a>
+        <a href="index.php">Log In</a>
+        <a href="register.php">Register</a>
+    </div>
 
 <div class="login-container">
     <h2>Registration Form</h2>
@@ -132,10 +139,7 @@ if (isset($_POST['submit'])) {
         <input type="submit" id="btn" value="Register" name="submit">
     </form>
 </div>
-<footer class="footer">
-    <div class="container">
-        <p>&copy; 2024 Company Name. All rights reserved.</p>
-    </div>
+
 </footer>
 </body>
 </html>

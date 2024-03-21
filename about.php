@@ -22,6 +22,7 @@ include("connect.php");
     <div class="navbar">
         <a href="nasabah_home.php">Home</a>
         <a href="index.php">Log In</a>
+        <a href="register.php">Register</a>
     </div>
 
     <div class="container">
@@ -59,10 +60,6 @@ include("connect.php");
             <a href="mailto:contact@kdhh-koperasi.com" class="btn" style="color: #e88eed;">Contact</a>
         </div>
     </section>
-   
-    <div class="footer">
-        <p>&copy; 2024 KDHH Koperasi. All rights reserved.</p>
-    </div>
 
 </body>
 

@@ -26,7 +26,8 @@ if (isset($_POST['submit'])) {
         $uploadOk = 0;
     }
 
-    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+    if (
+        $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
         && $imageFileType != "gif"
     ) {
         echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
@@ -80,7 +81,6 @@ if (isset($_POST['submit'])) {
                 </script>';
         } else {
             echo "Sorry, there was an error uploading your file.";
-            
         }
     }
 }
@@ -91,13 +91,15 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Form</title>
-    <link rel="stylesheet" type="text/css" href="resource/css/style.css">    
+    <link rel="stylesheet" type="text/css" href="resource/css/style.css">
     <link rel="stylesheet" type="text/css" href="resource/css/navbar-footer.css">
 </head>
+
 <body>
 
     <div class="navbar">
@@ -106,40 +108,48 @@ if (isset($_POST['submit'])) {
         <a href="register.php">Register</a>
     </div>
 
-<div class="login-container">
-    <h2>Registration Form</h2>
-    <form name="form" action="register.php" method="post" enctype="multipart/form-data">
-        <label for="username">Username:</label>
-        <input type="text" id="user" name="username" required></br></br>
+    <div class="login-container">
+        <h2>Registration Form</h2>
+        <form name="form" action="register_process.php" method="post" enctype="multipart/form-data">
+            <label for="username">Username:</label>
+            <input type="text" id="user" name="username" required></br></br>
 
-        <label for="password">Password:</label>
-        <input type="password" id="pass" name="password" required></br></br>
+            <label for="password">Password:</label>
+            <input type="password" id="pass" name="password" required></br></br>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required></br></br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required></br></br>
 
-        <label for="nama">Nama:</label>
-        <input type="text" id="nama" name="nama" required></br></br>
+            <label for="nama">Nama:</label>
+            <input type="text" id="nama" name="nama" required></br></br>
 
-        <label for="alamat">Alamat:</label>
-        <input type="text" id="alamat" name="alamat" required></br></br>
+            <label for="alamat">Alamat:</label>
+            <input type="text" id="alamat" name="alamat" required></br></br>
 
-        <label for="jenis_kelamin">Jenis Kelamin:</label>
-        <select id="jenis_kelamin" name="jenis_kelamin" required>
-            <option value="Laki-laki">Laki-laki</option>
-            <option value="Perempuan">Perempuan</option>
-        </select></br></br>
+            <label for="jenis_kelamin">Jenis Kelamin:</label>
+            <select id="jenis_kelamin" name="jenis_kelamin" required>
+                <option value="Laki-laki">Laki-laki</option>
+                <option value="Perempuan">Perempuan</option>
+            </select></br></br>
 
-        <label for="tanggal_lahir">Tanggal Lahir:</label>
-        <input type="date" id="tanggal_lahir" name="tanggal_lahir" required></br></br>
+            <label for="tanggal_lahir">Tanggal Lahir:</label>
+            <input type="date" id="tanggal_lahir" name="tanggal_lahir" required></br></br>
 
-        <label for="bukti_transfer">Upload File Bukti Pembayaran Simpanan Pokok:</label>
-        <input type="file" id="bukti_transfer" name="bukti_transfer" required></br></br>
+            <label for="bukti_transfer">Upload File Bukti Pembayaran Simpanan Pokok:</label>
+            <input type="file" id="bukti_transfer" name="bukti_transfer" required></br></br>
 
-        <input type="submit" id="btn" value="Register" name="submit">
-    </form>
-</div>
+            <input class="g-recaptcha" data-sitekey="6LeAVKIpAAAAAOGcHKnJ5vheLZei05cySPhvZgwX" data-callback='onSubmit' data-action='submit' type="submit" id="btn" value="Register" name="submit">
+        </form>
+    </div>
 
-</footer>
+    </footer>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script>
+        function onSubmit(token) {
+            document.form.submit(); // Change "demo-form" to "form"
+        }
+    </script>
+
 </body>
+
 </html>

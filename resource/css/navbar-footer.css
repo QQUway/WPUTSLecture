@@ -1,23 +1,28 @@
 body {
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #D6D9CE; 
 }
 
 .navbar {
     overflow: hidden;
-    background-color: #333;
+    background-color: #F4C3C2; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .navbar a {
     float: left;
     display: block;
-    color: #f2f2f2;
+    color: #000000; 
     text-align: center;
     padding: 14px 20px;
     text-decoration: none;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); 
 }
 
 .navbar a:hover {
-    background-color: #ddd;
+    background-color: #E88EED; 
     color: black;
 }
 
@@ -26,8 +31,12 @@ body {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: #333;
+    background-color: #F1B5CB; 
     color: white;
     text-align: center;
     padding: 10px 0;
+}
+
+.footer {
+    color :#000000;
 }

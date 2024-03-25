@@ -1,11 +1,9 @@
 <?php
-// Check if user is logged in and is an admin, if not, redirect to login page
 if (!isset($_COOKIE['username']) || !isset($_COOKIE['role']) || $_COOKIE['role'] !== 'admin') {
     header("Location: index.php");
     exit;
 }
 
-// Check if the nasabah ID is provided in the URL
 if (!isset($_GET['nasabah_id'])) {
     header("Location: users.php");
     exit;
@@ -15,14 +13,12 @@ $nasabah_id = $_GET['nasabah_id'];
 
 include "connect.php";
 
-// Fetch user information
 $userQuery = $conn->prepare("SELECT * FROM nasabah WHERE nasabah_id = ?");
 $userQuery->bind_param("i", $nasabah_id);
 $userQuery->execute();
 $userResult = $userQuery->get_result();
 $userData = $userResult->fetch_assoc();
 
-// Fetch pending transactions for the user
 $pendingQuery = $conn->prepare("SELECT * FROM transaction_data WHERE nasabah_id = ? AND status = 'pending'");
 $pendingQuery->bind_param("i", $nasabah_id);
 $pendingQuery->execute();

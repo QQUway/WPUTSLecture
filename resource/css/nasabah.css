@@ -2,19 +2,19 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #D6D9CE;
 }
 
 .container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    background-color: #F3DAD8;
 }
 
 h2 {
     color: #333;
     text-align: center;
-    
 }
 
 iframe {
@@ -24,7 +24,7 @@ iframe {
 
 a {
     text-decoration: none;
-    color: #007bff;
+    color: #F4C3C2;
 }
 
 a:hover {

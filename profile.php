@@ -1,11 +1,30 @@
 <?php
 include("connect.php");
 
-// Check if user is logged in, if not, redirect to login page
 if (!isset($_COOKIE['username'])) {
     header("Location: index.php");
     exit;
 }
+
+$username = $_COOKIE['username'];
+$stmt = $conn->prepare("SELECT nasabah_id FROM nasabah WHERE user_id = (SELECT id FROM user WHERE username = ?)");
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+$nasabah_id = $row['nasabah_id'];
+$stmt->close();
+
+$userQuery = $conn->prepare("SELECT Nama, Email, Alamat FROM nasabah WHERE nasabah_id = ?");
+$userQuery->bind_param("i", $nasabah_id);
+$userQuery->execute();
+$userResult = $userQuery->get_result();
+$userData = $userResult->fetch_assoc();
+$userQuery->close();
+
+$userName = $userData['Nama'];
+$userEmail = $userData['Email'];
+$userAddress = $userData['Alamat'];
 ?>
 
 <!DOCTYPE html>
@@ -17,10 +36,15 @@ if (!isset($_COOKIE['username'])) {
     <title>Customer Profile</title>
     <link rel="stylesheet" type="text/css" href="resource/css/profile.css">
     <link rel="stylesheet" type="text/css" href="resource/css/navbar-footer.css">
+    <style>
+    .profile-info {
+        margin-left: 20px;
+    }
+    </style>
 </head>
 
 <body>
-<div class="navbar">
+    <div class="navbar">
         <a href="nasabah_home.php">Home</a>
         <a href="transaction_page.php">Pembayaran</a>
         <a href="profile.php">Profile</a>
@@ -35,23 +59,16 @@ if (!isset($_COOKIE['username'])) {
             </div>
             <div class="biodata">
                 <label for="customer-name">Name:</label>
-                <p id="customer-name">John Doe</p>
+                <p id="customer-name"><?php echo $userName; ?></p>
 
                 <label for="customer-email">Email:</label>
-                <p id="customer-email">johndoe@example.com</p>
+                <p id="customer-email"><?php echo $userEmail; ?></p>
 
                 <label for="customer-address">Address:</label>
-                <p id="customer-address">123 Main St, City, Country</p>
-
-                <label for="customer-phone">Phone:</label>
-                <p id="customer-phone">123-456-7890</p>
-
-                <label for="customer-joined">Joined:</label>
-                <p id="customer-joined">January 1, 2020</p>
+                <p id="customer-address"><?php echo $userAddress; ?></p>
             </div>
         </div>
 
-        <!-- Form for updating user data -->
         <div class="form-container">
             <h2>Update User Data</h2>
             <form id="update-form">
@@ -68,7 +85,6 @@ if (!isset($_COOKIE['username'])) {
             </form>
         </div>
 
-        <!-- Form for changing profile photo -->
         <div class="form-container">
             <h2>Change Profile Photo</h2>
             <form id="photo-form">
@@ -77,12 +93,12 @@ if (!isset($_COOKIE['username'])) {
             </form>
         </div>
 
-        <!-- Form for resetting password -->
         <div class="form-container">
             <h2>Reset Password</h2>
             <form id="password-form">
                 <label for="current-password">Current Password:</label>
-                <input type="password" id="current-password" name="current-password" placeholder="Enter current password">
+                <input type="password" id="current-password" name="current-password"
+                    placeholder="Enter current password">
 
                 <label for="new-password">New Password:</label>
                 <input type="password" id="new-password" name="new-password" placeholder="Enter new password">
@@ -95,61 +111,54 @@ if (!isset($_COOKIE['username'])) {
         </div>
     </div>
 
-    
+
 
     <script>
-        document.getElementById('profile-photo-input').addEventListener('change', function(event) {
-            var file = event.target.files[0];
-            var cropperContainer = document.getElementById('cropper-container');
-            var uploadButton = document.getElementById('upload-button');
+    document.getElementById('profile-photo-input').addEventListener('change', function(event) {
+        var file = event.target.files[0];
+        var cropperContainer = document.getElementById('cropper-container');
+        var uploadButton = document.getElementById('upload-button');
 
-            if (file) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    var cropperImage = document.getElementById('cropper-image');
-                    cropperImage.src = e.target.result;
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var cropperImage = document.getElementById('cropper-image');
+                cropperImage.src = e.target.result;
 
-                    if (!cropperContainer.style.display || cropperContainer.style.display === 'none') {
-                        cropperContainer.style.display = 'block';
-                    }
+                if (!cropperContainer.style.display || cropperContainer.style.display === 'none') {
+                    cropperContainer.style.display = 'block';
+                }
 
-                    if (!uploadButton.style.display || uploadButton.style.display === 'none') {
-                        uploadButton.style.display = 'inline-block';
-                    }
+                if (!uploadButton.style.display || uploadButton.style.display === 'none') {
+                    uploadButton.style.display = 'inline-block';
+                }
 
-                    var cropper = new Cropper(cropperImage, {
-                        aspectRatio: 1, // square aspect ratio
-                        viewMode: 1, // restrict the cropped area to be within the container
-                        autoCropArea: 1, // automatically fit the cropped area to the container
+                var cropper = new Cropper(cropperImage, {
+                    aspectRatio: 1, 
+                    viewMode: 1, 
+                    autoCropArea: 1, 
+                });
+
+                document.getElementById('crop-button').addEventListener('click', function() {
+                    var croppedCanvas = cropper.getCroppedCanvas({
+                        width: 200, 
+                        height: 200, 
                     });
 
-                    document.getElementById('crop-button').addEventListener('click', function() {
-                        // Get the cropped canvas
-                        var croppedCanvas = cropper.getCroppedCanvas({
-                            width: 200, // set the desired width
-                            height: 200, // set the desired height
-                        });
+                    var croppedDataURL = croppedCanvas.toDataURL();
 
-                        // Convert the cropped canvas to a base64 encoded URL
-                        var croppedDataURL = croppedCanvas.toDataURL();
+                    var profilePhotoContainer = document.querySelector('.profile-photo-container');
+                    profilePhotoContainer.innerHTML = '<img src="' + croppedDataURL +
+                        '" alt="Profile Picture">';
 
-                        // Display the cropped image for preview
-                        var profilePhotoContainer = document.querySelector('.profile-photo-container');
-                        profilePhotoContainer.innerHTML = '<img src="' + croppedDataURL +
-                            '" alt="Profile Picture">';
+                });
 
-                        // Optionally, you can also submit the cropped image to the server
-                        // by sending croppedDataURL to the server using AJAX
-                    });
-
-                    document.getElementById('upload-button').addEventListener('click', function() {
-                        // Optionally, you can upload the cropped image to the server here
-                        // by sending croppedDataURL to the server using AJAX
-                    });
-                };
-                reader.readAsDataURL(file);
-            }
-        });
+                document.getElementById('upload-button').addEventListener('click', function() {
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+    });
     </script>
 </body>
 

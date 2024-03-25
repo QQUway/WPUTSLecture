@@ -1,10 +1,7 @@
 <?php
 include("connect.php");
 
-if (!isset($_COOKIE['username'])) {
-    header("Location: index.php");
-    exit;
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,10 +21,8 @@ if (!isset($_COOKIE['username'])) {
 
     <div class="navbar">
         <a href="nasabah_home.php">Home</a>
-        <a href="transaction_page.php">Pembayaran</a>
-        <a href="profile.php">Profile</a>
-        <a href="nasabah_history.php">History</a>
-        <a href="logout.php">Log Out</a>
+        <a href="index.php">Log In</a>
+        <a href="register.php">Register</a>
     </div>
 
     <div class="container">
@@ -56,26 +51,7 @@ if (!isset($_COOKIE['username'])) {
         </div>
     </section>
 
-    <section class="balances">
-        <div class="container">
-            <h2>Your Balances</h2>
-            <?php
-            include "connect.php";
-
-            $username = $_COOKIE['username'];
-            $query = "SELECT saldo, wajib, sukarela FROM nasabah INNER JOIN user ON nasabah.user_id = user.id WHERE user.username = ?";
-            $stmt = $conn->prepare($query);
-            $stmt->bind_param("s", $username);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $row = $result->fetch_assoc();
-            ?>
-            <p>Saldo: <?php echo $row['saldo']; ?></p>
-            <p>Wajib: <?php echo $row['wajib']; ?></p>
-            <p>Sukarela: <?php echo $row['sukarela']; ?></p>
-
-        </div>
-    </section>
+    
 
     <section class="contact">
         <div class="container">
@@ -84,7 +60,7 @@ if (!isset($_COOKIE['username'])) {
             <a href="mailto:contact@kdhh-koperasi.com" class="btn" style="color: #e88eed;">Contact</a>
         </div>
     </section>
-   
+
 </body>
 
 </html>

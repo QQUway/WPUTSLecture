@@ -1,13 +1,11 @@
 <?php
 include("connect.php");
 
-// Check if user is logged in, if not, redirect to login page
 if (!isset($_COOKIE['username'])) {
     header("Location: index.php");
     exit;
 }
 
-// Fetch nasabah ID based on username
 $username = $_COOKIE['username'];
 $stmt = $conn->prepare("SELECT nasabah_id FROM nasabah WHERE user_id = (SELECT id FROM user WHERE username = ?)");
 $stmt->bind_param("s", $username);
@@ -17,7 +15,6 @@ $row = $result->fetch_assoc();
 $nasabah_id = $row['nasabah_id'];
 $stmt->close();
 
-// Fetch transaction history for the nasabah
 $historyQuery = $conn->prepare("SELECT tanggal_transfer, amount, kategori, status FROM transaction_data WHERE nasabah_id = ?");
 $historyQuery->bind_param("i", $nasabah_id);
 $historyQuery->execute();
